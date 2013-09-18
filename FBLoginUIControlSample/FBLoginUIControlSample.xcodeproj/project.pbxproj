@@ -1,0 +1,474 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		ED15EABF17E91CAE0000B163 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED15EABE17E91CAE0000B163 /* FacebookSDK.framework */; };
+		ED15EAC217E9235F0000B163 /* LoginUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED15EAC117E9235F0000B163 /* LoginUIViewController.m */; };
+		ED15EAC417E92EAC0000B163 /* LoginUIViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED15EAC317E92EAC0000B163 /* LoginUIViewController.xib */; };
+		ED4B39CD17E91A080007F5BE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED4B39CC17E91A080007F5BE /* Foundation.framework */; };
+		ED4B39CF17E91A080007F5BE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED4B39CE17E91A080007F5BE /* CoreGraphics.framework */; };
+		ED4B39D117E91A080007F5BE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED4B39D017E91A080007F5BE /* UIKit.framework */; };
+		ED4B39D717E91A080007F5BE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = ED4B39D517E91A080007F5BE /* InfoPlist.strings */; };
+		ED4B39D917E91A080007F5BE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = ED4B39D817E91A080007F5BE /* main.m */; };
+		ED4B39DD17E91A080007F5BE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ED4B39DC17E91A080007F5BE /* AppDelegate.m */; };
+		ED4B39DF17E91A080007F5BE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED4B39DE17E91A080007F5BE /* Images.xcassets */; };
+		ED4B39E617E91A090007F5BE /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED4B39E517E91A090007F5BE /* XCTest.framework */; };
+		ED4B39E717E91A090007F5BE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED4B39CC17E91A080007F5BE /* Foundation.framework */; };
+		ED4B39E817E91A090007F5BE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED4B39D017E91A080007F5BE /* UIKit.framework */; };
+		ED4B39F017E91A090007F5BE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = ED4B39EE17E91A090007F5BE /* InfoPlist.strings */; };
+		ED4B39F217E91A090007F5BE /* FBLoginUIControlSampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ED4B39F117E91A090007F5BE /* FBLoginUIControlSampleTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		ED4B39E917E91A090007F5BE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ED4B39C117E91A080007F5BE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ED4B39C817E91A080007F5BE;
+			remoteInfo = FBLoginUIControlSample;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		ED15EABE17E91CAE0000B163 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
+		ED15EAC017E9235F0000B163 /* LoginUIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginUIViewController.h; sourceTree = "<group>"; };
+		ED15EAC117E9235F0000B163 /* LoginUIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginUIViewController.m; sourceTree = "<group>"; };
+		ED15EAC317E92EAC0000B163 /* LoginUIViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginUIViewController.xib; sourceTree = "<group>"; };
+		ED4B39C917E91A080007F5BE /* FBLoginUIControlSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FBLoginUIControlSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED4B39CC17E91A080007F5BE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		ED4B39CE17E91A080007F5BE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		ED4B39D017E91A080007F5BE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		ED4B39D417E91A080007F5BE /* FBLoginUIControlSample-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FBLoginUIControlSample-Info.plist"; sourceTree = "<group>"; };
+		ED4B39D617E91A080007F5BE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		ED4B39D817E91A080007F5BE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		ED4B39DA17E91A080007F5BE /* FBLoginUIControlSample-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FBLoginUIControlSample-Prefix.pch"; sourceTree = "<group>"; };
+		ED4B39DB17E91A080007F5BE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		ED4B39DC17E91A080007F5BE /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		ED4B39DE17E91A080007F5BE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		ED4B39E417E91A090007F5BE /* FBLoginUIControlSampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FBLoginUIControlSampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED4B39E517E91A090007F5BE /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		ED4B39ED17E91A090007F5BE /* FBLoginUIControlSampleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FBLoginUIControlSampleTests-Info.plist"; sourceTree = "<group>"; };
+		ED4B39EF17E91A090007F5BE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		ED4B39F117E91A090007F5BE /* FBLoginUIControlSampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FBLoginUIControlSampleTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		ED4B39C617E91A080007F5BE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED4B39CF17E91A080007F5BE /* CoreGraphics.framework in Frameworks */,
+				ED15EABF17E91CAE0000B163 /* FacebookSDK.framework in Frameworks */,
+				ED4B39D117E91A080007F5BE /* UIKit.framework in Frameworks */,
+				ED4B39CD17E91A080007F5BE /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ED4B39E117E91A090007F5BE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED4B39E617E91A090007F5BE /* XCTest.framework in Frameworks */,
+				ED4B39E817E91A090007F5BE /* UIKit.framework in Frameworks */,
+				ED4B39E717E91A090007F5BE /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		ED4B39C017E91A080007F5BE = {
+			isa = PBXGroup;
+			children = (
+				ED4B39D217E91A080007F5BE /* FBLoginUIControlSample */,
+				ED4B39EB17E91A090007F5BE /* FBLoginUIControlSampleTests */,
+				ED4B39CB17E91A080007F5BE /* Frameworks */,
+				ED4B39CA17E91A080007F5BE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		ED4B39CA17E91A080007F5BE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				ED4B39C917E91A080007F5BE /* FBLoginUIControlSample.app */,
+				ED4B39E417E91A090007F5BE /* FBLoginUIControlSampleTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		ED4B39CB17E91A080007F5BE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				ED15EABE17E91CAE0000B163 /* FacebookSDK.framework */,
+				ED4B39CC17E91A080007F5BE /* Foundation.framework */,
+				ED4B39CE17E91A080007F5BE /* CoreGraphics.framework */,
+				ED4B39D017E91A080007F5BE /* UIKit.framework */,
+				ED4B39E517E91A090007F5BE /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		ED4B39D217E91A080007F5BE /* FBLoginUIControlSample */ = {
+			isa = PBXGroup;
+			children = (
+				ED4B39DB17E91A080007F5BE /* AppDelegate.h */,
+				ED4B39DC17E91A080007F5BE /* AppDelegate.m */,
+				ED15EAC017E9235F0000B163 /* LoginUIViewController.h */,
+				ED15EAC117E9235F0000B163 /* LoginUIViewController.m */,
+				ED15EAC317E92EAC0000B163 /* LoginUIViewController.xib */,
+				ED4B39DE17E91A080007F5BE /* Images.xcassets */,
+				ED4B39D317E91A080007F5BE /* Supporting Files */,
+			);
+			path = FBLoginUIControlSample;
+			sourceTree = "<group>";
+		};
+		ED4B39D317E91A080007F5BE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				ED4B39D417E91A080007F5BE /* FBLoginUIControlSample-Info.plist */,
+				ED4B39D517E91A080007F5BE /* InfoPlist.strings */,
+				ED4B39D817E91A080007F5BE /* main.m */,
+				ED4B39DA17E91A080007F5BE /* FBLoginUIControlSample-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		ED4B39EB17E91A090007F5BE /* FBLoginUIControlSampleTests */ = {
+			isa = PBXGroup;
+			children = (
+				ED4B39F117E91A090007F5BE /* FBLoginUIControlSampleTests.m */,
+				ED4B39EC17E91A090007F5BE /* Supporting Files */,
+			);
+			path = FBLoginUIControlSampleTests;
+			sourceTree = "<group>";
+		};
+		ED4B39EC17E91A090007F5BE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				ED4B39ED17E91A090007F5BE /* FBLoginUIControlSampleTests-Info.plist */,
+				ED4B39EE17E91A090007F5BE /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		ED4B39C817E91A080007F5BE /* FBLoginUIControlSample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ED4B39F517E91A090007F5BE /* Build configuration list for PBXNativeTarget "FBLoginUIControlSample" */;
+			buildPhases = (
+				ED4B39C517E91A080007F5BE /* Sources */,
+				ED4B39C617E91A080007F5BE /* Frameworks */,
+				ED4B39C717E91A080007F5BE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FBLoginUIControlSample;
+			productName = FBLoginUIControlSample;
+			productReference = ED4B39C917E91A080007F5BE /* FBLoginUIControlSample.app */;
+			productType = "com.apple.product-type.application";
+		};
+		ED4B39E317E91A090007F5BE /* FBLoginUIControlSampleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ED4B39F817E91A090007F5BE /* Build configuration list for PBXNativeTarget "FBLoginUIControlSampleTests" */;
+			buildPhases = (
+				ED4B39E017E91A090007F5BE /* Sources */,
+				ED4B39E117E91A090007F5BE /* Frameworks */,
+				ED4B39E217E91A090007F5BE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				ED4B39EA17E91A090007F5BE /* PBXTargetDependency */,
+			);
+			name = FBLoginUIControlSampleTests;
+			productName = FBLoginUIControlSampleTests;
+			productReference = ED4B39E417E91A090007F5BE /* FBLoginUIControlSampleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		ED4B39C117E91A080007F5BE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = "Facebook Inc";
+				TargetAttributes = {
+					ED4B39E317E91A090007F5BE = {
+						TestTargetID = ED4B39C817E91A080007F5BE;
+					};
+				};
+			};
+			buildConfigurationList = ED4B39C417E91A080007F5BE /* Build configuration list for PBXProject "FBLoginUIControlSample" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = ED4B39C017E91A080007F5BE;
+			productRefGroup = ED4B39CA17E91A080007F5BE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				ED4B39C817E91A080007F5BE /* FBLoginUIControlSample */,
+				ED4B39E317E91A090007F5BE /* FBLoginUIControlSampleTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		ED4B39C717E91A080007F5BE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED4B39D717E91A080007F5BE /* InfoPlist.strings in Resources */,
+				ED15EAC417E92EAC0000B163 /* LoginUIViewController.xib in Resources */,
+				ED4B39DF17E91A080007F5BE /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ED4B39E217E91A090007F5BE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED4B39F017E91A090007F5BE /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		ED4B39C517E91A080007F5BE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED15EAC217E9235F0000B163 /* LoginUIViewController.m in Sources */,
+				ED4B39DD17E91A080007F5BE /* AppDelegate.m in Sources */,
+				ED4B39D917E91A080007F5BE /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ED4B39E017E91A090007F5BE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED4B39F217E91A090007F5BE /* FBLoginUIControlSampleTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		ED4B39EA17E91A090007F5BE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ED4B39C817E91A080007F5BE /* FBLoginUIControlSample */;
+			targetProxy = ED4B39E917E91A090007F5BE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		ED4B39D517E91A080007F5BE /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ED4B39D617E91A080007F5BE /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		ED4B39EE17E91A090007F5BE /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ED4B39EF17E91A090007F5BE /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		ED4B39F317E91A090007F5BE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		ED4B39F417E91A090007F5BE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		ED4B39F617E91A090007F5BE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "FBLoginUIControlSample/FBLoginUIControlSample-Prefix.pch";
+				INFOPLIST_FILE = "FBLoginUIControlSample/FBLoginUIControlSample-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		ED4B39F717E91A090007F5BE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "FBLoginUIControlSample/FBLoginUIControlSample-Prefix.pch";
+				INFOPLIST_FILE = "FBLoginUIControlSample/FBLoginUIControlSample-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		ED4B39F917E91A090007F5BE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/FBLoginUIControlSample.app/FBLoginUIControlSample";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(SYSTEM_APPS_DIR)/Xcode5-DP3.app/Contents/Developer/Library/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "FBLoginUIControlSample/FBLoginUIControlSample-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "FBLoginUIControlSampleTests/FBLoginUIControlSampleTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		ED4B39FA17E91A090007F5BE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/FBLoginUIControlSample.app/FBLoginUIControlSample";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(SYSTEM_APPS_DIR)/Xcode5-DP3.app/Contents/Developer/Library/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "FBLoginUIControlSample/FBLoginUIControlSample-Prefix.pch";
+				INFOPLIST_FILE = "FBLoginUIControlSampleTests/FBLoginUIControlSampleTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		ED4B39C417E91A080007F5BE /* Build configuration list for PBXProject "FBLoginUIControlSample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ED4B39F317E91A090007F5BE /* Debug */,
+				ED4B39F417E91A090007F5BE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ED4B39F517E91A090007F5BE /* Build configuration list for PBXNativeTarget "FBLoginUIControlSample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ED4B39F617E91A090007F5BE /* Debug */,
+				ED4B39F717E91A090007F5BE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ED4B39F817E91A090007F5BE /* Build configuration list for PBXNativeTarget "FBLoginUIControlSampleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ED4B39F917E91A090007F5BE /* Debug */,
+				ED4B39FA17E91A090007F5BE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = ED4B39C117E91A080007F5BE /* Project object */;
+}
