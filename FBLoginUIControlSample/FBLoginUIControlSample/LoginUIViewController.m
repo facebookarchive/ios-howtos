@@ -12,7 +12,6 @@
 @property (strong, nonatomic) IBOutlet FBProfilePictureView *profilePictureView;
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *statusLabel;
-
 @end
 
 @implementation LoginUIViewController
@@ -41,8 +40,6 @@
       // Add the button to the view
       [self.view addSubview:loginView];
       
-      // Size the button
-      [loginView sizeToFit];
     }
     return self;
 }
@@ -66,7 +63,7 @@
   self.statusLabel.text= @"You're not logged in!";
 }
 
-// You need to override loginView:handleError in order to handle possible errors that can occurr during login
+// You need to override loginView:handleError in order to handle possible errors that can occur during login
 - (void)loginView:(FBLoginView *)loginView handleError:(NSError *)error {
   NSString *alertMessage, *alertTitle;
   
