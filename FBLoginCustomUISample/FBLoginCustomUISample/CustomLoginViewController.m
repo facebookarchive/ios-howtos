@@ -19,15 +19,17 @@
 
 - (IBAction)buttonClicked:(id)sender
 {
+  // If the session state is any of the two "open" states when the button is clicked
   if (FBSession.activeSession.state == FBSessionStateOpen
       || FBSession.activeSession.state == FBSessionStateOpenTokenExtended) {
+
     // Close the session and remove the access token from the cache
-    // The session state handler will be called automatically
+    // The session state handler (in the app delegate) will be called automatically
     [FBSession.activeSession closeAndClearTokenInformation];
     
-  } else if (FBSession.activeSession.state == FBSessionStateClosed
-             || FBSession.activeSession.state == FBSessionStateClosedLoginFailed) {
-    // When the button is clicked, open a session showing the user the login UI
+  // If the session state is not any of the two "open" states when the button is clicked
+  } else {
+    // Open a session showing the user the login UI
     // You must ALWAYS ask for basic_info permissions when opening a session
     [FBSession openActiveSessionWithReadPermissions:@[@"basic_info"]
                                        allowLoginUI:YES

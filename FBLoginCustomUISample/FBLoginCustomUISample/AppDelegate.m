@@ -15,52 +15,57 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
   
-    // Create a LoginUIViewController instance where the login button will be
+    // Create a LoginUIViewController instance where we will put the login button
     CustomLoginViewController *customLoginViewController = [[CustomLoginViewController alloc] init];
     self.customLoginViewController = customLoginViewController;
     
     // Set loginUIViewController as root view controller
     [[self window] setRootViewController:customLoginViewController];
   
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+  
     // Whenever a person opens the app, check for a cached session
     if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
-      // If there's one, just open the session silently
-      NSLog(@"FBSessionStateCreatedTokenLoaded");
+      NSLog(@"Found a cached session");
+      // If there's one, just open the session silently, without showing the user the login UI
       [FBSession openActiveSessionWithReadPermissions:@[@"basic_info"]
                                          allowLoginUI:NO
                                     completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
+                                      // Handler for session state changes
+                                      // This method will be called EACH time the session state changes,
+                                      // also for intermediate states and NOT just when the session open
                                       [self sessionStateChanged:session state:state error:error];
                                     }];
+      
+      // If there's no cached session, we will show a login button
     } else {
       UIButton *loginButton = [self.customLoginViewController loginButton];
       [loginButton setTitle:@"Log in with Facebook" forState:UIControlStateNormal];
     }
-  
-    self.window.backgroundColor = [UIColor whiteColor];
-    [self.window makeKeyAndVisible];
     return YES;
 }
 
+// This method will handle session state changes during login
 - (void)sessionStateChanged:(FBSession *)session state:(FBSessionState) state error:(NSError *)error
 {
-  NSLog(@"sesionStateChange called");
   // If the session was opened successfully
   if (!error && state == FBSessionStateOpen){
-    NSLog(@"session opened");
+    NSLog(@"Session opened");
     // Show the user the logged-in UI
     [self userLoggedIn];
     return;
   }
   if (state == FBSessionStateClosed || state == FBSessionStateClosedLoginFailed){
-    // if the session is closed
-    NSLog(@"session closed");
+    // If the session is closed
+    NSLog(@"Session closed");
     // Show the user the logged-out UI
     [self userLoggedOut];
   }
 
   // Handle errors
   if (error){
-    NSLog(@"error");
+    NSLog(@"Error");
     NSString *alertText;
     NSString *alertTitle;
     // If the error requires people using an app to make an action outside of the app in order to recover
@@ -83,7 +88,7 @@
       // All other errors that can happen need retries
       // more info: https://github.com/facebook/facebook-ios-sdk/blob/master/src/FBError.h#L163
       } else {
-        //Get more error information from the error and
+        //Get more error information from the error
         NSDictionary *errorInformation = [[[error.userInfo objectForKey:@"com.facebook.sdk:ParsedJSONResponseKey"] objectForKey:@"body"] objectForKey:@"error"];
         
         // Show the user an error message
@@ -102,12 +107,10 @@
 // Show the user the logged-out UI
 - (void)userLoggedOut
 {
-  NSLog(@"userLoggedOut called");
-  // Show login button, hide logout button
-  // Show logout button, hide login button
+  // Set the button title as "Log in with Facebook"
   UIButton *loginButton = [self.customLoginViewController loginButton];
   [loginButton setTitle:@"Log in with Facebook" forState:UIControlStateNormal];
-  //[[self.customLoginViewController view] addSubview:loginButton];
+
   // Confirm logout message
   [self showMessage:@"You're now logged out" withTitle:@""];
 }
@@ -115,11 +118,10 @@
 // Show the user the logged-in UI
 - (void)userLoggedIn
 {
-  NSLog(@"userLoggedIn called");
-  // Show logout button, hide login button
-  UIButton *loginButton = [self.customLoginViewController loginButton];
+  // Set the button title as "Log out"
+  UIButton *loginButton = self.customLoginViewController.loginButton;
   [loginButton setTitle:@"Log out" forState:UIControlStateNormal];
-  //[[self.customLoginViewController view] addSubview:loginButton];
+
   // Welcome message
   [self showMessage:@"You're now logged in" withTitle:@"Welcome!"];
   

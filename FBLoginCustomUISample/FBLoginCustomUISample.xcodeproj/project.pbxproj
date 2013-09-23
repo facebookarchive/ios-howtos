@@ -19,9 +19,9 @@
 		ED31200C17EB717B0049390C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED311FF417EB717B0049390C /* UIKit.framework */; };
 		ED31201417EB717B0049390C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = ED31201217EB717B0049390C /* InfoPlist.strings */; };
 		ED31201617EB717B0049390C /* FBLoginCustomUISampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ED31201517EB717B0049390C /* FBLoginCustomUISampleTests.m */; };
-		ED31202017EB734D0049390C /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED31201F17EB734D0049390C /* FacebookSDK.framework */; };
 		ED31202417EB7B470049390C /* CustomLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED31202217EB7B470049390C /* CustomLoginViewController.m */; };
 		ED31202717EBC9190049390C /* CustomLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED31202617EBC9190049390C /* CustomLoginViewController.xib */; };
+		ED31202E17ECC94A0049390C /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED31202D17ECC94A0049390C /* FacebookSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,10 +51,10 @@
 		ED31201117EB717B0049390C /* FBLoginCustomUISampleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FBLoginCustomUISampleTests-Info.plist"; sourceTree = "<group>"; };
 		ED31201317EB717B0049390C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		ED31201517EB717B0049390C /* FBLoginCustomUISampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FBLoginCustomUISampleTests.m; sourceTree = "<group>"; };
-		ED31201F17EB734D0049390C /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		ED31202117EB7B470049390C /* CustomLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomLoginViewController.h; sourceTree = "<group>"; };
 		ED31202217EB7B470049390C /* CustomLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomLoginViewController.m; sourceTree = "<group>"; };
 		ED31202617EBC9190049390C /* CustomLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomLoginViewController.xib; sourceTree = "<group>"; };
+		ED31202D17ECC94A0049390C /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../FacebookSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,7 +63,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED311FF317EB717B0049390C /* CoreGraphics.framework in Frameworks */,
-				ED31202017EB734D0049390C /* FacebookSDK.framework in Frameworks */,
+				ED31202E17ECC94A0049390C /* FacebookSDK.framework in Frameworks */,
 				ED311FF517EB717B0049390C /* UIKit.framework in Frameworks */,
 				ED311FF117EB717B0049390C /* Foundation.framework in Frameworks */,
 			);
@@ -104,7 +104,7 @@
 		ED311FEF17EB717B0049390C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				ED31201F17EB734D0049390C /* FacebookSDK.framework */,
+				ED31202D17ECC94A0049390C /* FacebookSDK.framework */,
 				ED311FF017EB717B0049390C /* Foundation.framework */,
 				ED311FF217EB717B0049390C /* CoreGraphics.framework */,
 				ED311FF417EB717B0049390C /* UIKit.framework */,
@@ -372,6 +372,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
+					"$(SRCROOT)/..",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FBLoginCustomUISample/FBLoginCustomUISample-Prefix.pch";
@@ -389,6 +390,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
+					"$(SRCROOT)/..",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FBLoginCustomUISample/FBLoginCustomUISample-Prefix.pch";
