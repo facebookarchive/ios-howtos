@@ -17,7 +17,7 @@
 
 @implementation CustomLoginViewController
 
-- (IBAction)buttonClicked:(id)sender
+- (IBAction)buttonTouched:(id)sender
 {
   // If the session state is any of the two "open" states when the button is clicked
   if (FBSession.activeSession.state == FBSessionStateOpen

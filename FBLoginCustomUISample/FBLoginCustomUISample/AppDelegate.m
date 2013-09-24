@@ -46,7 +46,7 @@
     return YES;
 }
 
-// This method will handle session state changes during login
+// This method will handle ALL the session state changes in the app
 - (void)sessionStateChanged:(FBSession *)session state:(FBSessionState) state error:(NSError *)error
 {
   // If the session was opened successfully
@@ -150,9 +150,8 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-  // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-  
-  // We need to properly handle checkpointing during Facebook Login
+
+  // Handle the user leaving the app while the Facebook login dialog is being shown
   // For example: when the user presses the iOS "home" button while the login dialog is active
   [FBAppCall handleDidBecomeActive];
 }
