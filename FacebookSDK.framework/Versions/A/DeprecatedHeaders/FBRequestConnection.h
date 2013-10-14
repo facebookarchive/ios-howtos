@@ -24,6 +24,52 @@
 @class FBSession;
 @class UIImage;
 
+
+/*!
+ @attribute beta true
+ 
+ @typedef FBRequestConnectionErrorBehavior enum
+ 
+ @abstract Describes what automatic error handling behaviors to provide (if any).
+ 
+ @discussion This is a bitflag enum that can be composed of different values.
+ 
+     See FBError.h and FBErrorUtility.h for error category and user message details.
+ */
+typedef enum {
+    /*! The default behavior of none */
+    FBRequestConnectionErrorBehaviorNone                   = 0,
+
+    /*! This will retry any requests whose error category is classified as `FBErrorCategoryRetry`.
+     If the retry fails, the normal handler is invoked. */
+    FBRequestConnectionErrorBehaviorRetry                  = 1,
+    
+    /*! This will automatically surface any SDK provided userMessage (at most one), after
+     retry attempts, but before any reconnects are tried. The alert will have one button
+     whose text can be localized with the key "FBE:AlertMessageButton". 
+     
+     You should not display your own alert views in your request handler when specifying this
+     behavior.
+     */
+    FBRequestConnectionErrorBehaviorAlertUser              = 2,
+    
+    /*! This will automatically reconnect a session if the request failed due to an invalid token
+     that would otherwise close the session (such as an expired token or password change). Note
+     this will NOT reconnect a session if the user had uninstalled the app, or if the user had
+     disabled the app's slider in their privacy settings (in cases of iOS 6 system auth).
+     If the session is reconnected, this will transition the session state to FBSessionStateTokenExtended
+     which will invoke any state change handlers. Otherwise, the session is closed as normal.
+     
+     This behavior should not be used if the FBRequestConnection contains multiple
+     session instances. Further, when this behavior is used, you must not request new permissions
+     for the session until the connection is completed.
+     
+     Lastly, you should avoid using additional FBRequestConnections with the same session because
+     that will be subject to race conditions.
+     */
+    FBRequestConnectionErrorBehaviorReconnectSession     = 4,
+} FBRequestConnectionErrorBehavior;
+
 /*!
  Normally requests return JSON data that is parsed into a set of `NSDictionary`
  and `NSArray` objects.
@@ -136,6 +182,20 @@ typedef void (^FBRequestHandler)(FBRequestConnection *connection,
 @property(nonatomic, retain, readonly) NSHTTPURLResponse *urlResponse; 
 
 /*!
+ @attribute beta true
+
+ @abstract Set the automatic error handling behaviors.
+ @discussion 
+ 
+ This must be set before any requests are added.
+ 
+ When using retry behaviors, note the FBRequestConnection instance
+ passed to the FBRequestHandler may be a different instance that the
+ one the requests were originally started on.
+*/
+@property (nonatomic, assign) FBRequestConnectionErrorBehavior errorBehavior;
+
+/*!
  @methodgroup Adding requests
 */
 
@@ -143,8 +203,7 @@ typedef void (^FBRequestHandler)(FBRequestConnection *connection,
  @method
  
  @abstract
- This method adds an <FBRequest> object to this connection and then calls 
- <start> on the connection.
+ This method adds an <FBRequest> object to this connection.
  
  @discussion
  The completion handler is retained until the block is called upon the 
@@ -152,6 +211,7 @@ typedef void (^FBRequestHandler)(FBRequestConnection *connection,
  
  @param request       A request to be included in the round-trip when start is called.
  @param handler       A handler to call back when the round-trip completes or times out.
+                      The handler will be invoked on the main thread.
 */
 - (void)addRequest:(FBRequest*)request
  completionHandler:(FBRequestHandler)handler;
@@ -160,8 +220,7 @@ typedef void (^FBRequestHandler)(FBRequestConnection *connection,
  @method
 
  @abstract
- This method adds an <FBRequest> object to this connection and then calls 
- <start> on the connection.
+ This method adds an <FBRequest> object to this connection.
 
  @discussion
  The completion handler is retained until the block is called upon the
@@ -171,6 +230,7 @@ typedef void (^FBRequestHandler)(FBRequestConnection *connection,
  @param request         A request to be included in the round-trip when start is called.
 
  @param handler         A handler to call back when the round-trip completes or times out.
+                        The handler will be invoked on the main thread.
  
  @param name            An optional name for this request.  This can be used to feed
  the results of one request to the input of another <FBRequest> in the same 
@@ -180,6 +240,29 @@ typedef void (^FBRequestHandler)(FBRequestConnection *connection,
 - (void)addRequest:(FBRequest*)request
  completionHandler:(FBRequestHandler)handler
     batchEntryName:(NSString*)name;
+
+/*!
+ @method
+ 
+ @abstract
+ This method adds an <FBRequest> object to this connection.
+ 
+ @discussion
+ The completion handler is retained until the block is called upon the
+ completion or cancellation of the connection. This request can be named
+ to allow for using the request's response in a subsequent request.
+ 
+ @param request         A request to be included in the round-trip when start is called.
+ 
+ @param handler         A handler to call back when the round-trip completes or times out.
+ 
+ @param batchParameters The optional dictionary of parameters to include for this request
+ as described in [Graph API Batch Requests]( https://developers.facebook.com/docs/reference/api/batch/ ).
+ Examples include "depends_on", "name", or "omit_response_on_success".
+ */
+- (void)addRequest:(FBRequest*)request
+ completionHandler:(FBRequestHandler)handler
+   batchParameters:(NSDictionary*)batchParameters;
 
 /*!
  @methodgroup Instance methods
@@ -355,8 +438,8 @@ typedef void (^FBRequestHandler)(FBRequestConnection *connection,
  native Facebook app on the device.  If there is no native Facebook app, no one is logged into it, or the user has opted out
  at the iOS level from ad tracking, then a `nil` ID will be returned.
  
- This method itself returning `nil` indicates that either the user has opted-out (via iOS) from Ad Tracking, or a specific Facebook user cannot
- be identified.
+ This method returns `nil` if either the user has opted-out (via iOS) from Ad Tracking, the app itself has limited event usage
+ via the `[FBAppEvents setLimitEventUsage]` flag, or a specific Facebook user cannot be identified.
  
  @param handler The handler block to call when the request completes with a success, error, or cancel action.
  */
