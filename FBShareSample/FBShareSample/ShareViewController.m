@@ -153,7 +153,7 @@
   [action setObject:object forKey:@"tutorial"];
 
   // Tag one or multiple users using the users' ids
-  //[action setTags:@[@"774635482"]];
+  //[action setTags:@[<user-ids>]];
 
   // Tag a place using the place's id
   id<FBGraphPlace> place = (id<FBGraphPlace>)[FBGraphObject graphObject];
