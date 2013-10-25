@@ -1,0 +1,472 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		ED122BD3181057BD00A70384 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED122BD2181057BD00A70384 /* Foundation.framework */; };
+		ED122BD5181057BD00A70384 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED122BD4181057BD00A70384 /* CoreGraphics.framework */; };
+		ED122BD7181057BD00A70384 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED122BD6181057BD00A70384 /* UIKit.framework */; };
+		ED122BDD181057BD00A70384 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = ED122BDB181057BD00A70384 /* InfoPlist.strings */; };
+		ED122BDF181057BD00A70384 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = ED122BDE181057BD00A70384 /* main.m */; };
+		ED122BE3181057BD00A70384 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ED122BE2181057BD00A70384 /* AppDelegate.m */; };
+		ED122BE5181057BD00A70384 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED122BE4181057BD00A70384 /* Images.xcassets */; };
+		ED122BEC181057BD00A70384 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED122BEB181057BD00A70384 /* XCTest.framework */; };
+		ED122BED181057BD00A70384 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED122BD2181057BD00A70384 /* Foundation.framework */; };
+		ED122BEE181057BD00A70384 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED122BD6181057BD00A70384 /* UIKit.framework */; };
+		ED122BF6181057BD00A70384 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = ED122BF4181057BD00A70384 /* InfoPlist.strings */; };
+		ED122BF8181057BD00A70384 /* FBGraphAPISampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ED122BF7181057BD00A70384 /* FBGraphAPISampleTests.m */; };
+		ED122C041810589E00A70384 /* GraphAPICallsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED122C021810589E00A70384 /* GraphAPICallsViewController.m */; };
+		ED122C051810589E00A70384 /* GraphAPICallsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED122C031810589E00A70384 /* GraphAPICallsViewController.xib */; };
+		ED122C0718105C0B00A70384 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED122C0618105C0B00A70384 /* FacebookSDK.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		ED122BEF181057BD00A70384 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ED122BC7181057BC00A70384 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ED122BCE181057BC00A70384;
+			remoteInfo = FBGraphAPISample;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		ED122BCF181057BC00A70384 /* FBGraphAPISample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FBGraphAPISample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED122BD2181057BD00A70384 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		ED122BD4181057BD00A70384 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		ED122BD6181057BD00A70384 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		ED122BDA181057BD00A70384 /* FBGraphAPISample-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FBGraphAPISample-Info.plist"; sourceTree = "<group>"; };
+		ED122BDC181057BD00A70384 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		ED122BDE181057BD00A70384 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		ED122BE0181057BD00A70384 /* FBGraphAPISample-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FBGraphAPISample-Prefix.pch"; sourceTree = "<group>"; };
+		ED122BE1181057BD00A70384 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		ED122BE2181057BD00A70384 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		ED122BE4181057BD00A70384 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		ED122BEA181057BD00A70384 /* FBGraphAPISampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FBGraphAPISampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED122BEB181057BD00A70384 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		ED122BF3181057BD00A70384 /* FBGraphAPISampleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FBGraphAPISampleTests-Info.plist"; sourceTree = "<group>"; };
+		ED122BF5181057BD00A70384 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		ED122BF7181057BD00A70384 /* FBGraphAPISampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FBGraphAPISampleTests.m; sourceTree = "<group>"; };
+		ED122C011810589E00A70384 /* GraphAPICallsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphAPICallsViewController.h; sourceTree = "<group>"; };
+		ED122C021810589E00A70384 /* GraphAPICallsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphAPICallsViewController.m; sourceTree = "<group>"; };
+		ED122C031810589E00A70384 /* GraphAPICallsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GraphAPICallsViewController.xib; sourceTree = "<group>"; };
+		ED122C0618105C0B00A70384 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../FacebookSDK.framework; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		ED122BCC181057BC00A70384 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED122BD5181057BD00A70384 /* CoreGraphics.framework in Frameworks */,
+				ED122C0718105C0B00A70384 /* FacebookSDK.framework in Frameworks */,
+				ED122BD7181057BD00A70384 /* UIKit.framework in Frameworks */,
+				ED122BD3181057BD00A70384 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ED122BE7181057BD00A70384 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED122BEC181057BD00A70384 /* XCTest.framework in Frameworks */,
+				ED122BEE181057BD00A70384 /* UIKit.framework in Frameworks */,
+				ED122BED181057BD00A70384 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		ED122BC6181057BC00A70384 = {
+			isa = PBXGroup;
+			children = (
+				ED122BD8181057BD00A70384 /* FBGraphAPISample */,
+				ED122BF1181057BD00A70384 /* FBGraphAPISampleTests */,
+				ED122BD1181057BC00A70384 /* Frameworks */,
+				ED122BD0181057BC00A70384 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		ED122BD0181057BC00A70384 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				ED122BCF181057BC00A70384 /* FBGraphAPISample.app */,
+				ED122BEA181057BD00A70384 /* FBGraphAPISampleTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		ED122BD1181057BC00A70384 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				ED122C0618105C0B00A70384 /* FacebookSDK.framework */,
+				ED122BD2181057BD00A70384 /* Foundation.framework */,
+				ED122BD4181057BD00A70384 /* CoreGraphics.framework */,
+				ED122BD6181057BD00A70384 /* UIKit.framework */,
+				ED122BEB181057BD00A70384 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		ED122BD8181057BD00A70384 /* FBGraphAPISample */ = {
+			isa = PBXGroup;
+			children = (
+				ED122BE1181057BD00A70384 /* AppDelegate.h */,
+				ED122BE2181057BD00A70384 /* AppDelegate.m */,
+				ED122C011810589E00A70384 /* GraphAPICallsViewController.h */,
+				ED122C021810589E00A70384 /* GraphAPICallsViewController.m */,
+				ED122C031810589E00A70384 /* GraphAPICallsViewController.xib */,
+				ED122BE4181057BD00A70384 /* Images.xcassets */,
+				ED122BD9181057BD00A70384 /* Supporting Files */,
+			);
+			path = FBGraphAPISample;
+			sourceTree = "<group>";
+		};
+		ED122BD9181057BD00A70384 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				ED122BDA181057BD00A70384 /* FBGraphAPISample-Info.plist */,
+				ED122BDB181057BD00A70384 /* InfoPlist.strings */,
+				ED122BDE181057BD00A70384 /* main.m */,
+				ED122BE0181057BD00A70384 /* FBGraphAPISample-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		ED122BF1181057BD00A70384 /* FBGraphAPISampleTests */ = {
+			isa = PBXGroup;
+			children = (
+				ED122BF7181057BD00A70384 /* FBGraphAPISampleTests.m */,
+				ED122BF2181057BD00A70384 /* Supporting Files */,
+			);
+			path = FBGraphAPISampleTests;
+			sourceTree = "<group>";
+		};
+		ED122BF2181057BD00A70384 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				ED122BF3181057BD00A70384 /* FBGraphAPISampleTests-Info.plist */,
+				ED122BF4181057BD00A70384 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		ED122BCE181057BC00A70384 /* FBGraphAPISample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ED122BFB181057BD00A70384 /* Build configuration list for PBXNativeTarget "FBGraphAPISample" */;
+			buildPhases = (
+				ED122BCB181057BC00A70384 /* Sources */,
+				ED122BCC181057BC00A70384 /* Frameworks */,
+				ED122BCD181057BC00A70384 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FBGraphAPISample;
+			productName = FBGraphAPISample;
+			productReference = ED122BCF181057BC00A70384 /* FBGraphAPISample.app */;
+			productType = "com.apple.product-type.application";
+		};
+		ED122BE9181057BD00A70384 /* FBGraphAPISampleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ED122BFE181057BD00A70384 /* Build configuration list for PBXNativeTarget "FBGraphAPISampleTests" */;
+			buildPhases = (
+				ED122BE6181057BD00A70384 /* Sources */,
+				ED122BE7181057BD00A70384 /* Frameworks */,
+				ED122BE8181057BD00A70384 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				ED122BF0181057BD00A70384 /* PBXTargetDependency */,
+			);
+			name = FBGraphAPISampleTests;
+			productName = FBGraphAPISampleTests;
+			productReference = ED122BEA181057BD00A70384 /* FBGraphAPISampleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		ED122BC7181057BC00A70384 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = "Facebook Inc";
+				TargetAttributes = {
+					ED122BE9181057BD00A70384 = {
+						TestTargetID = ED122BCE181057BC00A70384;
+					};
+				};
+			};
+			buildConfigurationList = ED122BCA181057BC00A70384 /* Build configuration list for PBXProject "FBGraphAPISample" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = ED122BC6181057BC00A70384;
+			productRefGroup = ED122BD0181057BC00A70384 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				ED122BCE181057BC00A70384 /* FBGraphAPISample */,
+				ED122BE9181057BD00A70384 /* FBGraphAPISampleTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		ED122BCD181057BC00A70384 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED122BDD181057BD00A70384 /* InfoPlist.strings in Resources */,
+				ED122BE5181057BD00A70384 /* Images.xcassets in Resources */,
+				ED122C051810589E00A70384 /* GraphAPICallsViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ED122BE8181057BD00A70384 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED122BF6181057BD00A70384 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		ED122BCB181057BC00A70384 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED122BE3181057BD00A70384 /* AppDelegate.m in Sources */,
+				ED122BDF181057BD00A70384 /* main.m in Sources */,
+				ED122C041810589E00A70384 /* GraphAPICallsViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ED122BE6181057BD00A70384 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED122BF8181057BD00A70384 /* FBGraphAPISampleTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		ED122BF0181057BD00A70384 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ED122BCE181057BC00A70384 /* FBGraphAPISample */;
+			targetProxy = ED122BEF181057BD00A70384 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		ED122BDB181057BD00A70384 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ED122BDC181057BD00A70384 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		ED122BF4181057BD00A70384 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ED122BF5181057BD00A70384 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		ED122BF9181057BD00A70384 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		ED122BFA181057BD00A70384 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		ED122BFC181057BD00A70384 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/..",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "FBGraphAPISample/FBGraphAPISample-Prefix.pch";
+				INFOPLIST_FILE = "FBGraphAPISample/FBGraphAPISample-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		ED122BFD181057BD00A70384 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/..",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "FBGraphAPISample/FBGraphAPISample-Prefix.pch";
+				INFOPLIST_FILE = "FBGraphAPISample/FBGraphAPISample-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		ED122BFF181057BD00A70384 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/FBGraphAPISample.app/FBGraphAPISample";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(SYSTEM_APPS_DIR)/Xcode5-DP3.app/Contents/Developer/Library/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "FBGraphAPISample/FBGraphAPISample-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "FBGraphAPISampleTests/FBGraphAPISampleTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		ED122C00181057BD00A70384 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/FBGraphAPISample.app/FBGraphAPISample";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(SYSTEM_APPS_DIR)/Xcode5-DP3.app/Contents/Developer/Library/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "FBGraphAPISample/FBGraphAPISample-Prefix.pch";
+				INFOPLIST_FILE = "FBGraphAPISampleTests/FBGraphAPISampleTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		ED122BCA181057BC00A70384 /* Build configuration list for PBXProject "FBGraphAPISample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ED122BF9181057BD00A70384 /* Debug */,
+				ED122BFA181057BD00A70384 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ED122BFB181057BD00A70384 /* Build configuration list for PBXNativeTarget "FBGraphAPISample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ED122BFC181057BD00A70384 /* Debug */,
+				ED122BFD181057BD00A70384 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		ED122BFE181057BD00A70384 /* Build configuration list for PBXNativeTarget "FBGraphAPISampleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ED122BFF181057BD00A70384 /* Debug */,
+				ED122C00181057BD00A70384 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = ED122BC7181057BC00A70384 /* Project object */;
+}

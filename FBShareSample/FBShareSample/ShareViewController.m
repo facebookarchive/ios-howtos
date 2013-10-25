@@ -147,7 +147,7 @@
   id<FBOpenGraphAction> action = (id<FBOpenGraphAction>)[FBGraphObject graphObject];
 
   // Set image on the action
-  [action setObject:image forKey:@"image"];
+  //[action setObject:image forKey:@"image"];
 
   // Link the object to the action
   [action setObject:object forKey:@"tutorial"];
