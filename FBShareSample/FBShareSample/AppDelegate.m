@@ -15,6 +15,9 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
   
+    // Load the FBLoginView class (needed for login)
+    [FBLoginView class];
+  
     // Create a LoginUIViewController instance where we will put the login button
     ShareViewController *shareViewController = [[ShareViewController alloc] init];
     self.shareViewController = shareViewController;

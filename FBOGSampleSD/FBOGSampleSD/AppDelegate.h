@@ -14,6 +14,6 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) ShareViewController *shareViewController;
+@property (strong, nonatomic) OGShareViewController *shareViewController;
 
 @end

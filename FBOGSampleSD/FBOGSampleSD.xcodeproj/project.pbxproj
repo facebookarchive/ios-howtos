@@ -20,6 +20,8 @@
 		EDE8DD251835777F00B46D63 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EDE8DD231835777F00B46D63 /* InfoPlist.strings */; };
 		EDE8DD271835777F00B46D63 /* FBOGSampleSDTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EDE8DD261835777F00B46D63 /* FBOGSampleSDTests.m */; };
 		EDE8DD31183577DA00B46D63 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDE8DD30183577DA00B46D63 /* FacebookSDK.framework */; };
+		EDE8DD351835783E00B46D63 /* OGShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDE8DD331835783E00B46D63 /* OGShareViewController.m */; };
+		EDE8DD361835783E00B46D63 /* OGShareViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EDE8DD341835783E00B46D63 /* OGShareViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +52,9 @@
 		EDE8DD241835777F00B46D63 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		EDE8DD261835777F00B46D63 /* FBOGSampleSDTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FBOGSampleSDTests.m; sourceTree = "<group>"; };
 		EDE8DD30183577DA00B46D63 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../FacebookSDK.framework; sourceTree = "<group>"; };
+		EDE8DD321835783E00B46D63 /* OGShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGShareViewController.h; sourceTree = "<group>"; };
+		EDE8DD331835783E00B46D63 /* OGShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGShareViewController.m; sourceTree = "<group>"; };
+		EDE8DD341835783E00B46D63 /* OGShareViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OGShareViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +118,9 @@
 			children = (
 				EDE8DD101835777F00B46D63 /* AppDelegate.h */,
 				EDE8DD111835777F00B46D63 /* AppDelegate.m */,
+				EDE8DD321835783E00B46D63 /* OGShareViewController.h */,
+				EDE8DD331835783E00B46D63 /* OGShareViewController.m */,
+				EDE8DD341835783E00B46D63 /* OGShareViewController.xib */,
 				EDE8DD131835777F00B46D63 /* Images.xcassets */,
 				EDE8DD081835777F00B46D63 /* Supporting Files */,
 			);
@@ -225,6 +233,7 @@
 			files = (
 				EDE8DD0C1835777F00B46D63 /* InfoPlist.strings in Resources */,
 				EDE8DD141835777F00B46D63 /* Images.xcassets in Resources */,
+				EDE8DD361835783E00B46D63 /* OGShareViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,6 +252,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDE8DD351835783E00B46D63 /* OGShareViewController.m in Sources */,
 				EDE8DD121835777F00B46D63 /* AppDelegate.m in Sources */,
 				EDE8DD0E1835777F00B46D63 /* main.m in Sources */,
 			);

@@ -11,15 +11,81 @@
 #import "ShareViewController.h"
 
 @interface ShareViewController ()
-@property (strong, nonatomic) IBOutlet UIButton *shareLinkButton;
-@property (strong, nonatomic) IBOutlet UIButton *publishOGStoryWithImageButton;
+@property (strong, nonatomic) IBOutlet UIButton *ShareLinkWithShareDialogButton;
+@property (strong, nonatomic) IBOutlet UIButton *ShareLinkWithAPICallsButton;
 
+@property (strong, nonatomic) IBOutlet UIButton *StatusUpdateWithShareDialogButton;
+@property (strong, nonatomic) IBOutlet UIButton *StatusUpdateWithAPICallsButton;
 
 @end
 
 @implementation ShareViewController
 
-- (IBAction)shareLink:(id)sender
+
+//------------------Login implementation starts here------------------
+
+// Implement the loginViewShowingLoggedInUser: delegate method to modify your app's UI for a logged-in user experience
+- (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView {
+  // If the user is logged in, they can post to Facebook using API calls, so we show the buttons
+  [_ShareLinkWithAPICallsButton setHidden:NO];
+  [_StatusUpdateWithAPICallsButton setHidden:NO];
+}
+
+// Implement the loginViewShowingLoggedOutUser: delegate method to modify your app's UI for a logged-out user experience
+- (void)loginViewShowingLoggedOutUser:(FBLoginView *)loginView {
+  // If the user is NOT logged in, they can't post to Facebook using API calls, so we show the buttons
+  [_ShareLinkWithAPICallsButton setHidden:YES];
+  [_StatusUpdateWithAPICallsButton setHidden:YES];
+}
+
+// You need to override loginView:handleError in order to handle possible errors that can occur during login
+- (void)loginView:(FBLoginView *)loginView handleError:(NSError *)error {
+  NSString *alertMessage, *alertTitle;
+  
+  // If the user should perform an action outside of you app to recover,
+  // the SDK will provide a message for the user, you just need to surface it.
+  // This conveniently handles cases like Facebook password change or unverified Facebook accounts.
+  if ([FBErrorUtility shouldNotifyUserForError:error]) {
+    alertTitle = @"Facebook error";
+    alertMessage = [FBErrorUtility userMessageForError:error];
+    
+    // This code will handle session closures since that happen outside of the app.
+    // You can take a look at our error handling guide to know more about it
+    // https://developers.facebook.com/docs/ios/errors
+  } else if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryAuthenticationReopenSession) {
+    alertTitle = @"Session Error";
+    alertMessage = @"Your current session is no longer valid. Please log in again.";
+    
+    // If the user has cancelled a login, we will do nothing.
+    // You can also choose to show the user a message if cancelling login will result in
+    // the user not being able to complete a task they had initiated in your app
+    // (like accessing FB-stored information or posting to Facebook)
+  } else if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryUserCancelled) {
+    NSLog(@"user cancelled login");
+    
+    // For simplicity, this sample handles other errors with a generic message
+    // You can checkout our error handling guide for more detailed information
+    // https://developers.facebook.com/docs/ios/errors
+  } else {
+    alertTitle  = @"Something went wrong";
+    alertMessage = @"Please try again later.";
+    NSLog(@"Unexpected error:%@", error);
+  }
+  
+  if (alertMessage) {
+    [[[UIAlertView alloc] initWithTitle:alertTitle
+                                message:alertMessage
+                               delegate:nil
+                      cancelButtonTitle:@"OK"
+                      otherButtonTitles:nil] show];
+  }
+}
+
+
+//------------------------------------
+
+//------------------Sharing a link using the share dialog------------------
+- (IBAction)shareLinkWithShareDialog:(id)sender
 {
  
   // Check if the Facebook app is installed and we can present the share dialog
@@ -43,13 +109,8 @@
                               clientState:nil
                                   handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
                                     if(error) {
-                                      // There was an error, show a message to the user
+                                      // There was an error
                                       NSLog([NSString stringWithFormat:@"Error publishing story: %@", error.description]);
-                                      [[[UIAlertView alloc] initWithTitle:@"Error posting to Facebook"
-                                                                  message:@"Please try again later"
-                                                                 delegate:self
-                                                        cancelButtonTitle:@"OK"
-                                                        otherButtonTitles:nil] show];
                                     } else {
                                         // Success
                                         NSLog(@"result %@", results);
@@ -73,39 +134,25 @@
     [FBWebDialogs presentFeedDialogModallyWithSession:nil
                                            parameters:params
                                               handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
-                                                // Error launching the dialog or publishing a story.
                                                 if (error) {
+                                                  // Error launching the dialog or publishing a story.
                                                   NSLog([NSString stringWithFormat:@"Error publishing story: %@", error.description]);
-                                                  [[[UIAlertView alloc] initWithTitle:@"Error posting to Facebook"
-                                                                              message:@"Please try again later"
-                                                                             delegate:self
-                                                                    cancelButtonTitle:@"OK"
-                                                                    otherButtonTitles:nil] show];
-                                                  
                                                 } else {
-                                                  // User canceled.
                                                   if (result == FBWebDialogResultDialogNotCompleted) {
-                                                    // In this sample we just ignore it, but you could also notify your user that the story will not be posted.
+                                                    // User canceled.
                                                     NSLog(@"User cancelled.");
-                                                    
                                                   } else {
                                                     // Handle the publish feed callback
                                                     NSDictionary *urlParams = [self parseURLParams:[resultURL query]];
                                                     
-                                                    // User canceled.
                                                     if (![urlParams valueForKey:@"post_id"]) {
-                                                      // In this sample we just ignore it, but you could also notify your user that the story will not be posted.
+                                                      // User canceled.
                                                       NSLog(@"User cancelled.");
                                                       
-                                                      // User clicked the Share button
                                                     } else {
+                                                      // User clicked the Share button
                                                       NSString *result = [NSString stringWithFormat: @"Posted story, id: %@", [urlParams valueForKey:@"post_id"]];
                                                       NSLog(@"result %@", result);
-                                                      [[[UIAlertView alloc] initWithTitle:nil
-                                                                                  message:@"Sharing Tutorial was posted to Facebook."
-                                                                                 delegate:self
-                                                                        cancelButtonTitle:@"OK"
-                                                                        otherButtonTitles:nil] show];
                                                     }
                                                   }
                                                 }
@@ -113,142 +160,69 @@
   }
 }
 
-- (IBAction)publishOGStoryWithImage:(id)sender
-{
-  // Retrieve a picture from the device's photo library
-  /* 
-   NOTE: SDK Image size limits are 480x480px minimum resolution to 12MB maximum file size.
-   In this app we're not making sure that our image is within those limits but you should.
-   Error code for images that go below or above the size limits is 102.
-  */
-  UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-  [imagePicker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
-  [imagePicker setDelegate:self];
-  [self presentViewController:imagePicker animated:YES completion:nil];
-  
-}
+//------------------------------------
 
-// When the user is done picking the image
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+//------------------Posting a status update using the share dialog------------------
+- (IBAction)postStatusUpdateWithShareDialog:(id)sender
 {
   
-  /// Package the image inside a dictionary
-  NSArray* image = @[@{@"url": [info objectForKey:UIImagePickerControllerOriginalImage], @"user_generated": @"true"}];
-  
-  // Create an object
-  id<FBGraphObject> object =
-  [FBGraphObject openGraphObjectForPostWithType:@"share-sample:tutorial"
-                                          title:@"Sharing Tutorial"
-                                          image:@"http://i.imgur.com/g3Qc1HN.png"
-                                            url:@"https://developers.facebook.com/docs/ios/share/"
-                                    description:@"Allow your users to share stories on Facebook from your app using the iOS SDK."];
-
-  // Create an action
-  id<FBOpenGraphAction> action = (id<FBOpenGraphAction>)[FBGraphObject graphObject];
-
-  // Set image on the action
-  //[action setObject:image forKey:@"image"];
-
-  // Link the object to the action
-  [action setObject:object forKey:@"tutorial"];
-
-  // Tag one or multiple users using the users' ids
-  //[action setTags:@[<user-ids>]];
-
-  // Tag a place using the place's id
-  id<FBGraphPlace> place = (id<FBGraphPlace>)[FBGraphObject graphObject];
-  [place setId:@"141887372509674"]; // Facebook Seattle
-  [action setPlace:place];
-
-  // Dismiss the image picker off the screen
-  [self dismissViewControllerAnimated:YES completion:nil];
-
   // Check if the Facebook app is installed and we can present the share dialog
-  FBOpenGraphActionShareDialogParams *params = [[FBOpenGraphActionShareDialogParams alloc] init];
-  params.action = action;
-  params.actionType = @"share-sample:complete";
-
+  
+  FBShareDialogParams *params = [[FBShareDialogParams alloc] init];
+  params.link = [NSURL URLWithString:@"https://developers.facebook.com/docs/ios/share/"];
+  
   // If the Facebook app is installed and we can present the share dialog
-  if([FBDialogs canPresentShareDialogWithOpenGraphActionParams:params]) {
-    // Show the share dialog
-    [FBDialogs presentShareDialogWithOpenGraphAction:action
-                                          actionType:@"share-sample:complete"
-                                 previewPropertyName:@"tutorial"
-                                             handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
-                                               if(error) {
-                                                 // There was an error
-                                                 NSLog([NSString stringWithFormat:@"Error publishing story: %@", error.description]);
-                                                 [[[UIAlertView alloc] initWithTitle:@"Error posting to Facebook"
-                                                                             message:@"Please try again later"
-                                                                            delegate:self
-                                                                   cancelButtonTitle:@"OK"
-                                                                   otherButtonTitles:nil] show];
-                                               } else {
-                                                   // Success
-                                                   NSLog(@"result %@", results);
-                                               }
-                                             }];
+  if ([FBDialogs canPresentShareDialogWithParams:params]) {
     
-  // If the Facebook app is NOT installed and we can't present the share dialog
+    // Present share dialog
+    [FBDialogs presentShareDialogWithLink:nil
+                                  handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
+                                    if(error) {
+                                      // There was an error
+                                      NSLog([NSString stringWithFormat:@"Error publishing story: %@", error.description]);
+                                    } else {
+                                      // Success
+                                      NSLog(@"result %@", results);
+                                    }
+                                  }];
+    
+    // If the Facebook app is NOT installed and we can't present the share dialog
   } else {
     // FALLBACK: publish just a link using the Feed dialog
-
-    // Put together the dialog parameters
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-     @"Sharing Tutorial", @"name",
-     @"Build great social apps and get more installs.", @"caption",
-     @"Allow your users to share stories on Facebook from your app using the iOS SDK.", @"description",
-     @"https://developers.facebook.com/docs/ios/share/", @"link",
-     @"http://i.imgur.com/g3Qc1HN.png", @"picture",
-     nil];
-    
     // Show the feed dialog
     [FBWebDialogs presentFeedDialogModallyWithSession:nil
-                                           parameters:params
+                                           parameters:nil
                                               handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
-       // Error launching the dialog or publishing a story.
-       if (error) {
-         NSLog(@"Error publishing story.");
-         [[[UIAlertView alloc] initWithTitle:@"Error posting to Facebook"
-                                     message:@"Please try again later"
-                                    delegate:self
-                           cancelButtonTitle:@"OK"
-                           otherButtonTitles:nil] show];
-         
-       } else {
-         // User canceled.
-         if (result == FBWebDialogResultDialogNotCompleted) {
-           // In this sample we just ignore it, but you could also notify your user that the story will not be posted.
-           NSLog(@"User cancelled.");
-           
-         } else {
-           // Handle the publish feed callback
-           NSDictionary *urlParams = [self parseURLParams:[resultURL query]];
-           
-           // User canceled.
-           if (![urlParams valueForKey:@"post_id"]) {
-             // In this sample we just ignore it, but you could also notify your user that the story will not be posted.
-             NSLog(@"User cancelled.");
-             
-           // User clicked the Share button
-           } else {
-             NSString *result = [NSString stringWithFormat: @"Posted story, id: %@", [urlParams valueForKey:@"post_id"]];
-             NSLog(@"%@", result);
-             [[[UIAlertView alloc] initWithTitle:nil
-                                         message:@"Sharing Tutorial was posted to Facebook."
-                                        delegate:self
-                               cancelButtonTitle:@"OK"
-                               otherButtonTitles:nil] show];
-           }
-         }
-       }
-     }];
-    
+                                                if (error) {
+                                                  // Error launching the dialog or publishing a story.
+                                                  NSLog([NSString stringWithFormat:@"Error publishing story: %@", error.description]);
+                                                } else {
+                                                  if (result == FBWebDialogResultDialogNotCompleted) {
+                                                    // User canceled.
+                                                    NSLog(@"User cancelled.");
+                                                  } else {
+                                                    // Handle the publish feed callback
+                                                    NSDictionary *urlParams = [self parseURLParams:[resultURL query]];
+                                                    
+                                                    if (![urlParams valueForKey:@"post_id"]) {
+                                                      // User canceled.
+                                                      NSLog(@"User cancelled.");
+                                                      
+                                                    } else {
+                                                      // User clicked the Share button
+                                                      NSString *result = [NSString stringWithFormat: @"Posted story, id: %@", [urlParams valueForKey:@"post_id"]];
+                                                      NSLog(@"result %@", result);
+                                                    }
+                                                  }
+                                                }
+                                              }];
   }
-  
 }
 
-// A function for parsing URL parameters.
+
+//------------------------------------
+
+// A function for parsing URL parameters returned by the Feed Dialog.
 - (NSDictionary*)parseURLParams:(NSString *)query {
   NSArray *pairs = [query componentsSeparatedByString:@"&"];
   NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
@@ -260,5 +234,157 @@
   }
   return params;
 }
+
+//------------------------------------
+
+//------------------Sharing a link using API calls------------------
+
+- (IBAction)ShareLinkWithAPICalls:(id)sender {
+  // We will post on behalf of the user, these are the permissions we need:
+  NSArray *permissionsNeeded = @[@"publish_actions"];
+  
+  // Request the permissions the user currently has
+  [FBRequestConnection startWithGraphPath:@"/me/permissions"
+                        completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                          if (!error){
+                            NSDictionary *currentPermissions= [(NSArray *)[result data] objectAtIndex:0];
+                            NSMutableArray *requestPermissions = [[NSMutableArray alloc] initWithArray:@[]];
+                            
+                            // Check if all the permissions we need are present in the user's current permissions
+                            // If they are not present add them to the permissions to be requested
+                            for (NSString *permission in permissionsNeeded){
+                              if (![currentPermissions objectForKey:permission]){
+                                [requestPermissions addObject:permission];
+                              }
+                            }
+                            
+                            // If we have permissions to request
+                            if ([requestPermissions count] > 0){
+                              // Ask for the missing permissions
+                              [FBSession.activeSession requestNewPublishPermissions:requestPermissions
+                                                                    defaultAudience:FBSessionDefaultAudienceFriends
+                                                                  completionHandler:^(FBSession *session, NSError *error) {
+                                                                    if (!error) {
+                                                                      // Permission granted, we can request the user information
+                                                                      [self makeRequestToShareLink];
+                                                                    } else {
+                                                                      // An error occurred, handle the error
+                                                                      // See our Handling Errors guide: https://developers.facebook.com/docs/ios/errors/
+                                                                      NSLog([NSString stringWithFormat:@"%@", error.description]);
+                                                                    }
+                                                                  }];
+                            } else {
+                              // Permissions are present, we can request the user information
+                              [self makeRequestToShareLink];
+                            }
+                            
+                          } else {
+                            // There was an error requesting the permission information
+                            // See our Handling Errors guide: https://developers.facebook.com/docs/ios/errors/
+                            NSLog([NSString stringWithFormat:@"%@", error.description]);
+                          }
+                        }];
+}
+
+- (void)makeRequestToShareLink {
+  
+  // NOTE: pre-filling fields associated with Facebook posts,
+  // unless the user manually generated the content earlier in the workflow of your app,
+  // can be against the Platform policies: https://developers.facebook.com/policy
+  
+  // Put together the dialog parameters
+  NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                 @"Sharing Tutorial", @"name",
+                                 @"Build great social apps and get more installs.", @"caption",
+                                 @"Allow your users to share stories on Facebook from your app using the iOS SDK.", @"description",
+                                 @"https://developers.facebook.com/docs/ios/share/", @"link",
+                                 @"http://i.imgur.com/g3Qc1HN.png", @"picture",
+                                 nil];
+  
+  [FBRequestConnection startWithGraphPath:@"/me/feed"
+                               parameters:params
+                               HTTPMethod:@"POST"
+                        completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                          if (!error) {
+                            // Link posted successfully to Facebook
+                            NSLog([NSString stringWithFormat:@"result: %@", result]);
+                          } else {
+                            // There was an error
+                            NSLog([NSString stringWithFormat:@"%@", error.description]);
+                          }
+                        }];
+}
+
+//------------------------------------
+
+//------------------Posting a status update using API calls------------------
+
+- (IBAction)StatusUpdateWithAPICalls:(id)sender {
+  // We will post on behalf of the user, these are the permissions we need:
+  NSArray *permissionsNeeded = @[@"publish_actions"];
+  
+  // Request the permissions the user currently has
+  [FBRequestConnection startWithGraphPath:@"/me/permissions"
+                        completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                          if (!error){
+                            NSDictionary *currentPermissions= [(NSArray *)[result data] objectAtIndex:0];
+                            NSMutableArray *requestPermissions = [[NSMutableArray alloc] initWithArray:@[]];
+                            
+                            // Check if all the permissions we need are present in the user's current permissions
+                            // If they are not present add them to the permissions to be requested
+                            for (NSString *permission in permissionsNeeded){
+                              if (![currentPermissions objectForKey:permission]){
+                                [requestPermissions addObject:permission];
+                              }
+                            }
+                            
+                            // If we have permissions to request
+                            if ([requestPermissions count] > 0){
+                              // Ask for the missing permissions
+                              [FBSession.activeSession requestNewPublishPermissions:requestPermissions
+                                                                    defaultAudience:FBSessionDefaultAudienceFriends
+                                                                  completionHandler:^(FBSession *session, NSError *error) {
+                                                                    if (!error) {
+                                                                      // Permission granted, we can request the user information
+                                                                      [self makeRequestToUpdateStatus];
+                                                                    } else {
+                                                                      // An error occurred, handle the error
+                                                                      // See our Handling Errors guide: https://developers.facebook.com/docs/ios/errors/
+                                                                      NSLog([NSString stringWithFormat:@"%@", error.description]);
+                                                                    }
+                                                                  }];
+                            } else {
+                              // Permissions are present, we can request the user information
+                              [self makeRequestToUpdateStatus];
+                            }
+                            
+                          } else {
+                            // There was an error requesting the permission information
+                            // See our Handling Errors guide: https://developers.facebook.com/docs/ios/errors/
+                            NSLog([NSString stringWithFormat:@"%@", error.description]);
+                          }
+                        }];
+}
+
+- (void)makeRequestToUpdateStatus {
+  
+  // NOTE: pre-filling fields associated with Facebook posts,
+  // unless the user manually generated the content earlier in the workflow of your app,
+  // can be against the Platform policies: https://developers.facebook.com/policy
+  
+  [FBRequestConnection startForPostStatusUpdate:@"User-generated status update."
+                              completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                          if (!error) {
+                            // Status update posted successfully to Facebook
+                            NSLog([NSString stringWithFormat:@"result: %@", result]);
+                          } else {
+                            // There was an error
+                            NSLog([NSString stringWithFormat:@"%@", error.description]);
+                          }
+                        }];
+}
+
+
+//------------------------------------
 
 @end

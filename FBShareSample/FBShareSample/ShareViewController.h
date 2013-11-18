@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ShareViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface ShareViewController : UIViewController
 
 @end

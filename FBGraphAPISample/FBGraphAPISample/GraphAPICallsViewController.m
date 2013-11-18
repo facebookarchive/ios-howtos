@@ -50,7 +50,6 @@
   [_fbLoginView setReadPermissions:@[@"basic_info"]];
   [_fbLoginView setDelegate:self];
   _objectID = nil;
-  NSLog(@"view did load");
 }
 
 // This method will be called when the user information has been fetched after login
@@ -146,8 +145,6 @@
   // Request the permissions the user currently has
   [FBRequestConnection startWithGraphPath:@"/me/permissions"
                         completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-                          __block NSString *alertText;
-                          __block NSString *alertTitle;
                           if (!error){
                             // These are the current permissions the user has
                             NSDictionary *currentPermissions= [(NSArray *)[result data] objectAtIndex:0];
@@ -170,53 +167,12 @@
                                requestNewReadPermissions:requestPermissions
                                        completionHandler:^(FBSession *session, NSError *error) {
                                          if (!error) {
-                                           // Permission granted
-                                           NSLog([NSString stringWithFormat:@"new permissions %@", [FBSession.activeSession permissions]]);
-                                           // We can request the user information
+                                           // Permission granted, we can request the user information
                                            [self makeRequestForUserData];
                                          } else {
-                                           // An error occurred
-                                           if ([FBErrorUtility shouldNotifyUserForError:error] == YES){
-                                             // Error requires people using an app to make an action outside of the app to recover
-                                             // The Facebook SDK will provide an appropriate message that we have to show the user
-                                             alertTitle = @"Something went wrong";
-                                             alertText = [FBErrorUtility userMessageForError:error];
-                                             [[[UIAlertView alloc] initWithTitle:alertTitle
-                                                                         message:alertText
-                                                                        delegate:self
-                                                               cancelButtonTitle:@"OK!"
-                                                               otherButtonTitles:nil] show];
-                                           } else {
-                                             // We need to handle the error
-                                             // The user cancelled and didn't grant the permissions
-                                             if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryUserCancelled) {
-                                               alertTitle = @"";
-                                               alertText = @"Permissions not granted";
-                                               [[[UIAlertView alloc] initWithTitle:alertTitle
-                                                                           message:alertText
-                                                                          delegate:self
-                                                                 cancelButtonTitle:@"OK!"
-                                                                 otherButtonTitles:nil] show];
-                                             } else{
-                                               // For all other errors that can happen, retry
-                                               //Get more error information from the error
-                                               NSDictionary *errorInformation = [[[error.userInfo
-                                                                                   objectForKey:@"com.facebook.sdk:ParsedJSONResponseKey"]
-                                                                                   objectForKey:@"body"]
-                                                                                   objectForKey:@"error"];
-                                               
-                                               // Show the user an error message
-                                               alertTitle = @"Something went wrong";
-                                               alertText = [NSString
-                                                            stringWithFormat:@"Please retry. \n\n If the problem persists contact us and mention this error code: %@",
-                                                            [errorInformation objectForKey:@"message"]];
-                                               [[[UIAlertView alloc] initWithTitle:alertTitle
-                                                                           message:alertText
-                                                                          delegate:self
-                                                                 cancelButtonTitle:@"OK!"
-                                                                 otherButtonTitles:nil] show];
-                                             }
-                                           }
+                                           // An error occurred, we need to handle the error
+                                           // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
+                                           NSLog([NSString stringWithFormat:@"error %@", error.description]);
                                          }
                                        }];
                             } else {
@@ -226,23 +182,9 @@
                             }
                             
                           } else {
-                            // There was an error requesting the permission information
-                            //Get more error information from the error
-                            NSDictionary *errorInformation = [[[error.userInfo
-                                                                objectForKey:@"com.facebook.sdk:ParsedJSONResponseKey"]
-                                                                objectForKey:@"body"]
-                                                                objectForKey:@"error"];
-                            
-                            // Show the user an error message
-                            alertTitle = @"Something went wrong";
-                            alertText = [NSString
-                                         stringWithFormat:@"Please retry. \n\n If the problem persists contact us and mention this error code: %@",
-                                         [errorInformation objectForKey:@"message"]];
-                            [[[UIAlertView alloc] initWithTitle:alertTitle
-                                                        message:alertText
-                                                       delegate:self
-                                              cancelButtonTitle:@"OK!"
-                                              otherButtonTitles:nil] show];
+                            // An error occurred, we need to handle the error
+                            // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
+                            NSLog([NSString stringWithFormat:@"error %@", error.description]);
                           }
                         }];
   
@@ -253,38 +195,13 @@
 - (void) makeRequestForUserData
 {
   [FBRequestConnection startForMeWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-    __block NSString *alertText;
-    __block NSString *alertTitle;
     if (!error) {
       // Success! Include your code to handle the results here
       NSLog([NSString stringWithFormat:@"user info: %@", result]);
     } else {
-      // An error occurred
-      if ([FBErrorUtility shouldNotifyUserForError:error] == YES){
-        // Error requires people using an app to make an action outside of the app to recover
-        // The Facebook SDK will provide an appropriate message that we have to show the user
-        alertTitle = @"Something went wrong";
-        alertText = [FBErrorUtility userMessageForError:error];
-        [[[UIAlertView alloc] initWithTitle:alertTitle
-                                    message:alertText
-                                   delegate:self
-                          cancelButtonTitle:@"OK!"
-                          otherButtonTitles:nil] show];
-      } else {
-        // For all other errors that can happen, retry
-        //Get more error information from the error
-        NSDictionary *errorInformation = [[[error.userInfo objectForKey:@"com.facebook.sdk:ParsedJSONResponseKey"] objectForKey:@"body"] objectForKey:@"error"];
-        
-        // Show the user an error message
-        alertTitle = @"Something went wrong";
-        alertText = [NSString stringWithFormat:@"Please retry. \n\n If the problem persists contact us and mention this error code: %@", [errorInformation objectForKey:@"message"]];
-        [[[UIAlertView alloc] initWithTitle:alertTitle
-                                    message:alertText
-                                   delegate:self
-                          cancelButtonTitle:@"OK!"
-                          otherButtonTitles:nil] show];
-      }
-      
+      // An error occurred, we need to handle the error
+      // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
+      NSLog([NSString stringWithFormat:@"error %@", error.description]);
     }
   }];
 }
@@ -309,8 +226,6 @@
   // Request the permissions the user currently has
   [FBRequestConnection startWithGraphPath:@"/me/permissions"
                         completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-                          __block NSString *alertText;
-                          __block NSString *alertTitle;
                           if (!error){
                             NSDictionary *currentPermissions= [(NSArray *)[result data] objectAtIndex:0];
                             NSLog([NSString stringWithFormat:@"current permissions %@", currentPermissions]);
@@ -335,43 +250,9 @@
                                                                    // We can request the user information
                                                                    [self makeRequestForUserEvents];
                                                                  } else {
-                                                                   // An error occurred
-                                                                   if ([FBErrorUtility shouldNotifyUserForError:error] == YES){
-                                                                     // Error requires people using an app to make an action outside of the app to recover
-                                                                     // The Facebook SDK will provide an appropriate message that we have to show the user
-                                                                     alertTitle = @"Something went wrong";
-                                                                     alertText = [FBErrorUtility userMessageForError:error];
-                                                                     [[[UIAlertView alloc] initWithTitle:alertTitle
-                                                                                                 message:alertText
-                                                                                                delegate:self
-                                                                                       cancelButtonTitle:@"OK!"
-                                                                                       otherButtonTitles:nil] show];
-                                                                   } else {
-                                                                     // We need to handle the error
-                                                                     // The user cancelled and didn't grant the permissions
-                                                                     if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryUserCancelled) {
-                                                                       alertTitle = @"";
-                                                                       alertText = @"Permissions not granted";
-                                                                       [[[UIAlertView alloc] initWithTitle:alertTitle
-                                                                                                   message:alertText
-                                                                                                  delegate:self
-                                                                                         cancelButtonTitle:@"OK!"
-                                                                                         otherButtonTitles:nil] show];
-                                                                     } else{
-                                                                       // For all other errors that can happen, retry
-                                                                       //Get more error information from the error
-                                                                       NSDictionary *errorInformation = [[[error.userInfo objectForKey:@"com.facebook.sdk:ParsedJSONResponseKey"] objectForKey:@"body"] objectForKey:@"error"];
-                                                                       
-                                                                       // Show the user an error message
-                                                                       alertTitle = @"Something went wrong";
-                                                                       alertText = [NSString stringWithFormat:@"Please retry. \n\n If the problem persists contact us and mention this error code: %@", [errorInformation objectForKey:@"message"]];
-                                                                       [[[UIAlertView alloc] initWithTitle:alertTitle
-                                                                                                   message:alertText
-                                                                                                  delegate:self
-                                                                                         cancelButtonTitle:@"OK!"
-                                                                                         otherButtonTitles:nil] show];
-                                                                     }
-                                                                   }
+                                                                   // An error occurred, we need to handle the error
+                                                                   // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
+                                                                   NSLog([NSString stringWithFormat:@"error %@", error.description]);
                                                                  }
                                                                }];
                             } else {
@@ -381,18 +262,9 @@
                             }
                             
                           } else {
-                            // There was an error requesting the permission information
-                            //Get more error information from the error
-                            NSDictionary *errorInformation = [[[error.userInfo objectForKey:@"com.facebook.sdk:ParsedJSONResponseKey"] objectForKey:@"body"] objectForKey:@"error"];
-                            
-                            // Show the user an error message
-                            alertTitle = @"Something went wrong";
-                            alertText = [NSString stringWithFormat:@"Please retry. \n\n If the problem persists contact us and mention this error code: %@", [errorInformation objectForKey:@"message"]];
-                            [[[UIAlertView alloc] initWithTitle:alertTitle
-                                                        message:alertText
-                                                       delegate:self
-                                              cancelButtonTitle:@"OK!"
-                                              otherButtonTitles:nil] show];
+                            // An error occurred, we need to handle the error
+                            // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
+                            NSLog([NSString stringWithFormat:@"error %@", error.description]);
                           }
                         }];
 }
@@ -401,43 +273,13 @@
 {
   [FBRequestConnection startWithGraphPath:@"me/events?fields=cover,name,start_time"
                         completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-    __block NSString *alertText;
-    __block NSString *alertTitle;
     if (!error) {
       // Success! Include your code to handle the results here
       NSLog([NSString stringWithFormat:@"user events: %@", result]);
     } else {
-      // An error occurred
-      if ([FBErrorUtility shouldNotifyUserForError:error] == YES){
-        // Error requires people using an app to make an action outside of the app to recover
-        // The Facebook SDK will provide an appropriate message that we have to show the user
-        alertTitle = @"Something went wrong";
-        alertText = [FBErrorUtility userMessageForError:error];
-        [[[UIAlertView alloc] initWithTitle:alertTitle
-                                    message:alertText
-                                   delegate:self
-                          cancelButtonTitle:@"OK!"
-                          otherButtonTitles:nil] show];
-      } else {
-        // For all other errors that can happen, retry
-        //Get more error information from the error
-        NSDictionary *errorInformation = [[[error.userInfo
-                                            objectForKey:@"com.facebook.sdk:ParsedJSONResponseKey"]
-                                            objectForKey:@"body"]
-                                            objectForKey:@"error"];
-        
-        // Show the user an error message
-        alertTitle = @"Something went wrong";
-        alertText = [NSString
-                     stringWithFormat:@"Please retry. \n\n If the problem persists contact us and mention this error code: %@",
-                     [errorInformation objectForKey:@"message"]];
-        [[[UIAlertView alloc] initWithTitle:alertTitle
-                                    message:alertText
-                                   delegate:self
-                          cancelButtonTitle:@"OK!"
-                          otherButtonTitles:nil] show];
-      }
-      
+      // An error occurred, we need to handle the error
+      // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
+      NSLog([NSString stringWithFormat:@"error %@", error.description]);
     }
   }];
 }
@@ -466,8 +308,6 @@
   // Request the permissions the user currently has
   [FBRequestConnection startWithGraphPath:@"/me/permissions"
                         completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-                          __block NSString *alertText;
-                          __block NSString *alertTitle;
                           if (!error){
                             NSDictionary *currentPermissions= [(NSArray *)[result data] objectAtIndex:0];
                             NSLog([NSString stringWithFormat:@"current permissions %@", currentPermissions]);
@@ -493,43 +333,9 @@
                                                                        // We can request the user information
                                                                        [self makeRequestToPostObject];
                                                                      } else {
-                                                                       // An error occurred
-                                                                       if ([FBErrorUtility shouldNotifyUserForError:error] == YES){
-                                                                         // Error requires people using an app to make an action outside of the app to recover
-                                                                         // The Facebook SDK will provide an appropriate message that we have to show the user
-                                                                         alertTitle = @"Something went wrong";
-                                                                         alertText = [FBErrorUtility userMessageForError:error];
-                                                                         [[[UIAlertView alloc] initWithTitle:alertTitle
-                                                                                                     message:alertText
-                                                                                                    delegate:self
-                                                                                           cancelButtonTitle:@"OK!"
-                                                                                           otherButtonTitles:nil] show];
-                                                                       } else {
-                                                                         // We need to handle the error
-                                                                         // The user cancelled and didn't grant the permissions
-                                                                         if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryUserCancelled) {
-                                                                           alertTitle = @"";
-                                                                           alertText = @"Permissions not granted";
-                                                                           [[[UIAlertView alloc] initWithTitle:alertTitle
-                                                                                                       message:alertText
-                                                                                                      delegate:self
-                                                                                             cancelButtonTitle:@"OK!"
-                                                                                             otherButtonTitles:nil] show];
-                                                                         } else{
-                                                                           // For all other errors that can happen, retry
-                                                                           //Get more error information from the error
-                                                                           NSDictionary *errorInformation = [[[error.userInfo objectForKey:@"com.facebook.sdk:ParsedJSONResponseKey"] objectForKey:@"body"] objectForKey:@"error"];
-                                                                           
-                                                                           // Show the user an error message
-                                                                           alertTitle = @"Something went wrong";
-                                                                           alertText = [NSString stringWithFormat:@"Please retry. \n\n If the problem persists contact us and mention this error code: %@", [errorInformation objectForKey:@"message"]];
-                                                                           [[[UIAlertView alloc] initWithTitle:alertTitle
-                                                                                                       message:alertText
-                                                                                                      delegate:self
-                                                                                             cancelButtonTitle:@"OK!"
-                                                                                             otherButtonTitles:nil] show];
-                                                                         }
-                                                                       }
+                                                                       // An error occurred, we need to handle the error
+                                                                       // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
+                                                                       NSLog([NSString stringWithFormat:@"error %@", error.description]);
                                                                      }
                                                                    }];
                             } else {
@@ -539,18 +345,9 @@
                             }
                             
                           } else {
-                            // There was an error requesting the permission information
-                            //Get more error information from the error
-                            NSDictionary *errorInformation = [[[error.userInfo objectForKey:@"com.facebook.sdk:ParsedJSONResponseKey"] objectForKey:@"body"] objectForKey:@"error"];
-                            
-                            // Show the user an error message
-                            alertTitle = @"Something went wrong";
-                            alertText = [NSString stringWithFormat:@"Please retry. \n\n If the problem persists contact us and mention this error code: %@", [errorInformation objectForKey:@"message"]];
-                            [[[UIAlertView alloc] initWithTitle:alertTitle
-                                                        message:alertText
-                                                       delegate:self
-                                              cancelButtonTitle:@"OK!"
-                                              otherButtonTitles:nil] show];
+                            // An error occurred, we need to handle the error
+                            // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
+                            NSLog([NSString stringWithFormat:@"error %@", error.description]);
                           }
                         }];
 }
@@ -625,67 +422,16 @@
                             cancelButtonTitle:@"OK!"
                             otherButtonTitles:nil] show];
         } else {
-          // An error occurred
-          if ([FBErrorUtility shouldNotifyUserForError:error] == YES){
-            // Error requires people using an app to make an action outside of the app to recover
-            // The Facebook SDK will provide an appropriate message that we have to show the user
-            alertTitle = @"Something went wrong";
-            alertText = [FBErrorUtility userMessageForError:error];
-            [[[UIAlertView alloc] initWithTitle:alertTitle
-                                        message:alertText
-                                       delegate:self
-                              cancelButtonTitle:@"OK!"
-                              otherButtonTitles:nil] show];
-          } else {
-            // For all other errors that can happen, retry
-            //Get more error information from the error
-            NSDictionary *errorInformation = [[[error.userInfo objectForKey:@"com.facebook.sdk:ParsedJSONResponseKey"]
-                                                               objectForKey:@"body"]
-                                                              objectForKey:@"error"];
-            
-            // Show the user an error message
-            NSLog(@"error posting the object: %@", [errorInformation objectForKey:@"message"]);
-            alertTitle = @"Something went wrong";
-            alertText = [NSString
-                         stringWithFormat:@"Please retry. \n\n If the problem persists contact us and mention this error code: %@",
-                         [errorInformation objectForKey:@"message"]];
-            [[[UIAlertView alloc] initWithTitle:alertTitle
-                                        message:alertText
-                                       delegate:self
-                              cancelButtonTitle:@"OK!"
-                              otherButtonTitles:nil] show];
-          }
-          
+          // An error occurred, we need to handle the error
+          // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
+          NSLog([NSString stringWithFormat:@"error %@", error.description]);
         }
       }];
       
     } else {
-      // An error occurred
-      if ([FBErrorUtility shouldNotifyUserForError:error] == YES){
-        // Error requires people using an app to make an action outside of the app to recover
-        // The Facebook SDK will provide an appropriate message that we have to show the user
-        alertTitle = @"Something went wrong";
-        alertText = [FBErrorUtility userMessageForError:error];
-        [[[UIAlertView alloc] initWithTitle:alertTitle
-                                    message:alertText
-                                   delegate:self
-                          cancelButtonTitle:@"OK!"
-                          otherButtonTitles:nil] show];
-      } else {
-        // For all other errors that can happen, retry
-        //Get more error information from the error
-        NSDictionary *errorInformation = [[[error.userInfo objectForKey:@"com.facebook.sdk:ParsedJSONResponseKey"] objectForKey:@"body"] objectForKey:@"error"];
-        
-        // Show the user an error message
-        NSLog(@"Error staging an image: %@", [errorInformation objectForKey:@"message"]);
-        alertTitle = @"Something went wrong";
-        alertText = [NSString stringWithFormat:@"Please retry. \n\n If the problem persists contact us and mention this error code: %@", [errorInformation objectForKey:@"message"]];
-        [[[UIAlertView alloc] initWithTitle:alertTitle
-                                    message:alertText
-                                   delegate:self
-                          cancelButtonTitle:@"OK!"
-                          otherButtonTitles:nil] show];
-      }
+      // An error occurred, we need to handle the error
+      // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
+      NSLog([NSString stringWithFormat:@"error %@", error.description]);
     }
   }];
 }
@@ -710,26 +456,9 @@
                               NSString *alertText;
                               NSString *alertTitle;
                               if (error) {
-                                if ([FBErrorUtility shouldNotifyUserForError:error] == YES){
-                                  // Error requires people using an app to make an action outside of the app to recover
-                                  alertTitle = @"Something went wrong";
-                                  alertText = [FBErrorUtility userMessageForError:error];
-                                  [[[UIAlertView alloc] initWithTitle:alertTitle
-                                                              message:alertText
-                                                             delegate:self
-                                                    cancelButtonTitle:@"OK!"
-                                                    otherButtonTitles:nil] show];
-                                } else {
-                                  NSDictionary *errorInformation = [[[error.userInfo objectForKey:@"com.facebook.sdk:ParsedJSONResponseKey"] objectForKey:@"body"] objectForKey:@"error"];
-                                  // Show the user a generic error message
-                                  alertTitle = @"Something went wrong";
-                                  alertText = [NSString stringWithFormat:@"Please retry. \n\n If the problem persists contact us and mention this error code: %@", [errorInformation objectForKey:@"message"]];
-                                  [[[UIAlertView alloc] initWithTitle:alertTitle
-                                                              message:alertText
-                                                             delegate:self
-                                                    cancelButtonTitle:@"OK!"
-                                                    otherButtonTitles:nil] show];
-                                }
+                                // An error occurred, we need to handle the error
+                                // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
+                                NSLog([NSString stringWithFormat:@"error %@", error.description]);
                               } else {
                                 // The object has been removed
                                 NSLog([NSString stringWithFormat:@"The object with id %@ has been deleted", objectID]);
@@ -788,43 +517,9 @@
                                                                       // We can request the user information
                                                                       [self makeRequestToPostStory];
                                                                     } else {
-                                                                      // An error occurred
-                                                                      if ([FBErrorUtility shouldNotifyUserForError:error] == YES){
-                                                                        // Error requires people using an app to make an action outside of the app to recover
-                                                                        // The Facebook SDK will provide an appropriate message that we have to show the user
-                                                                        alertTitle = @"Something went wrong";
-                                                                        alertText = [FBErrorUtility userMessageForError:error];
-                                                                        [[[UIAlertView alloc] initWithTitle:alertTitle
-                                                                                                    message:alertText
-                                                                                                   delegate:self
-                                                                                          cancelButtonTitle:@"OK!"
-                                                                                          otherButtonTitles:nil] show];
-                                                                      } else {
-                                                                        // We need to handle the error
-                                                                        // The user cancelled and didn't grant the permissions
-                                                                        if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryUserCancelled) {
-                                                                          alertTitle = @"";
-                                                                          alertText = @"Permissions not granted";
-                                                                          [[[UIAlertView alloc] initWithTitle:alertTitle
-                                                                                                      message:alertText
-                                                                                                     delegate:self
-                                                                                            cancelButtonTitle:@"OK!"
-                                                                                            otherButtonTitles:nil] show];
-                                                                        } else{
-                                                                          // For all other errors that can happen, retry
-                                                                          //Get more error information from the error
-                                                                          NSDictionary *errorInformation = [[[error.userInfo objectForKey:@"com.facebook.sdk:ParsedJSONResponseKey"] objectForKey:@"body"] objectForKey:@"error"];
-                                                                          
-                                                                          // Show the user an error message
-                                                                          alertTitle = @"Something went wrong";
-                                                                          alertText = [NSString stringWithFormat:@"Please retry. \n\n If the problem persists contact us and mention this error code: %@", [errorInformation objectForKey:@"message"]];
-                                                                          [[[UIAlertView alloc] initWithTitle:alertTitle
-                                                                                                      message:alertText
-                                                                                                     delegate:self
-                                                                                            cancelButtonTitle:@"OK!"
-                                                                                            otherButtonTitles:nil] show];
-                                                                        }
-                                                                      }
+                                                                      // An error occurred, we need to handle the error
+                                                                      // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
+                                                                      NSLog([NSString stringWithFormat:@"error %@", error.description]);
                                                                     }
                                                                   }];
                             } else {
@@ -834,18 +529,9 @@
                             }
                             
                           } else {
-                            // There was an error requesting the permission information
-                            //Get more error information from the error
-                            NSDictionary *errorInformation = [[[error.userInfo objectForKey:@"com.facebook.sdk:ParsedJSONResponseKey"] objectForKey:@"body"] objectForKey:@"error"];
-                            
-                            // Show the user an error message
-                            alertTitle = @"Something went wrong";
-                            alertText = [NSString stringWithFormat:@"Please retry. \n\n If the problem persists contact us and mention this error code: %@", [errorInformation objectForKey:@"message"]];
-                            [[[UIAlertView alloc] initWithTitle:alertTitle
-                                                        message:alertText
-                                                       delegate:self
-                                              cancelButtonTitle:@"OK!"
-                                              otherButtonTitles:nil] show];
+                            // An error occurred, we need to handle the error
+                            // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
+                            NSLog([NSString stringWithFormat:@"error %@", error.description]);
                           }
                         }];
 }
@@ -882,36 +568,9 @@
                                                        cancelButtonTitle:@"OK!"
                                                        otherButtonTitles:nil] show];
                                    } else {
-                                     // An error occurred
-                                     if ([FBErrorUtility shouldNotifyUserForError:error] == YES){
-                                       // Error requires people using an app to make an out-of-band action to recover
-                                       alertTitle = @"Something went wrong :S";
-                                       alertText = [FBErrorUtility userMessageForError:error];
-                                       [[[UIAlertView alloc] initWithTitle:alertTitle
-                                                                   message:alertText
-                                                                  delegate:self
-                                                         cancelButtonTitle:@"OK!"
-                                                         otherButtonTitles:nil] show];
-                                     } else {
-                                       // We need to handle the error
-                                       //Get more error information from the error
-                                       int errorCode = error.code;
-                                       NSDictionary *errorInformation = [[[[error userInfo]
-                                                                           objectForKey:@"com.facebook.sdk:ParsedJSONResponseKey"]
-                                                                           objectForKey:@"body"]
-                                                                           objectForKey:@"error"];
-                               
-                                      // Diplay message for generic error
-                                      alertTitle = @"Something went wrong :S";
-                                      alertText = [NSString
-                                                  stringWithFormat:@"Please retry. \n\n If the problem persists contact us and mention this error code: %@",
-                                                  [errorInformation objectForKey:@"message"]];
-                                      [[[UIAlertView alloc] initWithTitle:alertTitle
-                                                                  message:alertText
-                                                                 delegate:self
-                                                        cancelButtonTitle:@"OK!"
-                                                        otherButtonTitles:nil] show];
-                                     }
+                                     // An error occurred, we need to handle the error
+                                     // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
+                                     NSLog([NSString stringWithFormat:@"error %@", error.description]);
                                    }
                                  }];
 

@@ -16,11 +16,11 @@
   // Override point for customization after application launch.
   
   // Create a LoginUIViewController instance where we will put the login button
-  ShareViewController *shareViewController = [[ShareViewController alloc] init];
-  self.shareViewController = shareViewController;
+  OGShareViewController *ogShareViewController = [[OGShareViewController alloc] init];
+  self.shareViewController = ogShareViewController;
   
   // Set loginUIViewController as root view controller
-  [[self window] setRootViewController:shareViewController];
+  [[self window] setRootViewController:ogShareViewController];
   
   self.window.backgroundColor = [UIColor whiteColor];
   [self.window makeKeyAndVisible];
