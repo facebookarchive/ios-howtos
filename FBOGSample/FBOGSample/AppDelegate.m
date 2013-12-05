@@ -18,7 +18,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
   
-    // Load the FBLoginView class
+    // Load the FBLoginView class (needed for Login)
     // You can find more information about why you need to add this line of code in our troubleshooting guide
     // https://developers.facebook.com/docs/ios/troubleshooting#objc
     [FBLoginView class];

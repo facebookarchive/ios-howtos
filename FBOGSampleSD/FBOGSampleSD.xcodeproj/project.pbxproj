@@ -203,6 +203,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Facebook Inc";
 				TargetAttributes = {
+					EDE8DCFD1835777F00B46D63 = {
+						DevelopmentTeam = V9WTTPBFK9;
+					};
 					EDE8DD181835777F00B46D63 = {
 						TestTargetID = EDE8DCFD1835777F00B46D63;
 					};
@@ -369,6 +372,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/..",
@@ -386,6 +390,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/..",
@@ -457,6 +462,7 @@
 				EDE8DD2C1835777F00B46D63 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EDE8DD2D1835777F00B46D63 /* Build configuration list for PBXNativeTarget "FBOGSampleSDTests" */ = {
 			isa = XCConfigurationList;
@@ -465,6 +471,7 @@
 				EDE8DD2F1835777F00B46D63 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -6,8 +6,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OGShareViewController">
             <connections>
+                <outlet property="ShareOGStoryWithAPICallsButton" destination="S0A-lu-mzq" id="2Yf-W7-WCU"/>
                 <outlet property="fbLoginView" destination="Aib-DE-2mX" id="dhV-SL-Zgs"/>
                 <outlet property="shareOGStoryButton" destination="S0A-lu-mzq" id="jZ3-Si-Kj5"/>
+                <outlet property="shareOGStoryWithAPICallsButton" destination="S0A-lu-mzq" id="aJS-A9-wF1"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
         </placeholder>
@@ -17,16 +19,16 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Aib-DE-2mX" customClass="FBLoginView">
-                    <rect key="frame" x="29" y="120" width="262" height="47"/>
+                    <rect key="frame" x="20" y="120" width="280" height="47"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S0A-lu-mzq">
-                    <rect key="frame" x="20" y="262" width="280" height="44"/>
+                    <rect key="frame" x="20" y="188" width="280" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="1" green="0.25093179450000003" blue="0.62936305209999999" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                    <state key="normal" title="share an OG story - API calls">
+                    <state key="normal" title="Share an OG story - API calls">
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -34,9 +36,16 @@
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="shareOGStory:" destination="-1" eventType="touchUpInside" id="haA-NG-ASe"/>
+                        <action selector="shareOGStoryWithAPICalls:" destination="-1" eventType="touchUpInside" id="ySc-Dr-Zhx"/>
                     </connections>
                 </button>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Login to Share an OG story with API calls:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Lq-Kr-Gim">
+                    <rect key="frame" x="27" y="91" width="266" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>

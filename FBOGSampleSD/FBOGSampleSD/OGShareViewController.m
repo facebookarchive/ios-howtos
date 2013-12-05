@@ -10,12 +10,13 @@
 #import "OGShareViewController.h"
 
 @interface OGShareViewController ()
+@property (strong, nonatomic) IBOutlet UIButton *shareOGStoryWithShareDialogButton;
 
 @end
 
 @implementation OGShareViewController
 
-- (IBAction)publishOGStoryWithImage:(id)sender
+- (IBAction)shareOGStoryWithShareDialog:(id)sender
 {
   // Retrieve a picture from the device's photo library
   /*
@@ -39,20 +40,20 @@
   
   // Create an object
   id<FBGraphObject> object =
-  [FBGraphObject openGraphObjectForPostWithType:@"share-sample:tutorial"
-                                          title:@"Sharing Tutorial"
+  [FBGraphObject openGraphObjectForPostWithType:@"fbogsamplesd:dish"
+                                          title:@"Roasted pumpkin seeds"
                                           image:@"http://i.imgur.com/g3Qc1HN.png"
-                                            url:@"https://developers.facebook.com/docs/ios/share/"
-                                    description:@"Allow your users to share stories on Facebook from your app using the iOS SDK."];
+                                            url:@"http://example.com/roasted_pumpkin_seeds"
+                                    description:@"Crunchy pumpkin seeds roasted in butter and lightly salted."];
   
   // Create an action
   id<FBOpenGraphAction> action = (id<FBOpenGraphAction>)[FBGraphObject graphObject];
   
   // Set image on the action
-  //[action setObject:image forKey:@"image"];
+  [action setObject:image forKey:@"image"];
   
   // Link the object to the action
-  [action setObject:object forKey:@"tutorial"];
+  [action setObject:object forKey:@"dish"];
   
   // Tag one or multiple users using the users' ids
   //[action setTags:@[<user-ids>]];
@@ -68,23 +69,18 @@
   // Check if the Facebook app is installed and we can present the share dialog
   FBOpenGraphActionShareDialogParams *params = [[FBOpenGraphActionShareDialogParams alloc] init];
   params.action = action;
-  params.actionType = @"share-sample:complete";
-  
+  params.actionType = @"fbogsamplesd:eat";
+
   // If the Facebook app is installed and we can present the share dialog
   if([FBDialogs canPresentShareDialogWithOpenGraphActionParams:params]) {
     // Show the share dialog
     [FBDialogs presentShareDialogWithOpenGraphAction:action
-                                          actionType:@"share-sample:complete"
-                                 previewPropertyName:@"tutorial"
+                                          actionType:@"fbogsamplesd:eat"
+                                 previewPropertyName:@"dish"
                                              handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
                                                if(error) {
                                                  // There was an error
                                                  NSLog([NSString stringWithFormat:@"Error publishing story: %@", error.description]);
-                                                 [[[UIAlertView alloc] initWithTitle:@"Error posting to Facebook"
-                                                                             message:@"Please try again later"
-                                                                            delegate:self
-                                                                   cancelButtonTitle:@"OK"
-                                                                   otherButtonTitles:nil] show];
                                                } else {
                                                  // Success
                                                  NSLog(@"result %@", results);
@@ -97,13 +93,13 @@
     
     // Put together the dialog parameters
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   @"Sharing Tutorial", @"name",
-                                   @"Build great social apps and get more installs.", @"caption",
-                                   @"Allow your users to share stories on Facebook from your app using the iOS SDK.", @"description",
-                                   @"https://developers.facebook.com/docs/ios/share/", @"link",
+                                   @"Roasted pumpkin seeds", @"name",
+                                   @"Healthy snack.", @"caption",
+                                   @"Crunchy pumpkin seeds roasted in butter and lightly salted.", @"description",
+                                   @"http://example.com/roasted_pumpkin_seeds", @"link",
                                    @"http://i.imgur.com/g3Qc1HN.png", @"picture",
                                    nil];
-    
+
     // Show the feed dialog
     [FBWebDialogs presentFeedDialogModallyWithSession:nil
                                            parameters:params
@@ -113,7 +109,7 @@
                                                   NSLog([NSString stringWithFormat:@"Error publishing story: %@", error.description]);
                                                 } else {
                                                   if (result == FBWebDialogResultDialogNotCompleted) {
-                                                    // User canceled.
+                                                    // User cancelled.
                                                     NSLog(@"User cancelled.");
                                                   } else {
                                                     // Handle the publish feed callback

@@ -10,10 +10,12 @@
 
 @interface OGShareViewController ()
 @property (strong, nonatomic) IBOutlet FBLoginView *fbLoginView;
-@property (strong, nonatomic) IBOutlet UIButton *shareOGStoryButton;
+@property (strong, nonatomic) IBOutlet UIButton *shareOGStoryWithAPICallsButton;
 @end
 
 @implementation OGShareViewController
+
+//--------------------------- start Login code -----------------------------
 
 - (void) viewDidLoad {
   // Ask for basic permissions on login
@@ -24,13 +26,13 @@
 // Implement the loginViewShowingLoggedInUser: delegate method to modify your app's UI for a logged-in user experience
 - (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView {
   NSLog(@"user logged in");
-  [_shareOGStoryButton setHidden:NO];
+  [_shareOGStoryWithAPICallsButton setHidden:NO];
 }
 
 // Implement the loginViewShowingLoggedOutUser: delegate method to modify your app's UI for a logged-out user experience
 - (void)loginViewShowingLoggedOutUser:(FBLoginView *)loginView {
   NSLog(@"user logged out");
-  [_shareOGStoryButton setHidden:YES];
+  [_shareOGStoryWithAPICallsButton setHidden:YES];
 }
 
 // You need to override loginView:handleError in order to handle possible errors that can occur during login
@@ -76,13 +78,15 @@
   }
 }
 
+//--------------------------- end Login code -----------------------------
+
+//--------------------------- start sharing OG story with API calls code -----------------------------
+
 - (IBAction)shareOGStory:(id)sender
 {
   // Check for publish permissions
   [FBRequestConnection startWithGraphPath:@"/me/permissions"
                         completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-                          __block NSString *alertText;
-                          __block NSString *alertTitle;
                           if (!error){
                             NSDictionary *permissions= [(NSArray *)[result data] objectAtIndex:0];
                             if (![permissions objectForKey:@"publish_actions"]){
@@ -92,14 +96,9 @@
                                                                   completionHandler:^(FBSession *session, NSError *error) {
                                                                     if (!error) {
                                                                       if ([FBSession.activeSession.permissions indexOfObject:@"publish_actions"] == NSNotFound){
-                                                                        // Permission not granted, tell the user we will not add the item to their wishlist
-                                                                        alertTitle = @"Permission not granted";
-                                                                        alertText = @"This app will not share to Facebook.";
-                                                                        [[[UIAlertView alloc] initWithTitle:alertTitle
-                                                                                                    message:alertText
-                                                                                                   delegate:self
-                                                                                          cancelButtonTitle:@"OK!"
-                                                                                          otherButtonTitles:nil] show];
+                                                                        // Permission not granted, tell the user we will not share to Facebook
+                                                                        NSLog(@"Permission not granted, we will not share to Facebook.");
+                                                                        
                                                                       } else {
                                                                         // Permission granted, publish the OG story
                                                                         [self pickImageAndPublishStory];
@@ -107,41 +106,7 @@
                                                                       
                                                                     } else {
                                                                       // An error occurred
-                                                                      if ([FBErrorUtility shouldNotifyUserForError:error] == YES){
-                                                                        // Error requires people using an app to make an out-of-band action to recover
-                                                                        alertTitle = @"Something went wrong";
-                                                                        alertText = [FBErrorUtility userMessageForError:error];
-                                                                        [[[UIAlertView alloc] initWithTitle:alertTitle
-                                                                                                    message:alertText
-                                                                                                   delegate:self
-                                                                                          cancelButtonTitle:@"OK!"
-                                                                                          otherButtonTitles:nil] show];
-                                                                      } else {
-                                                                        // We need to handle the error
-                                                                        if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryUserCancelled) {
-                                                                          alertTitle = @"Permission not granted";
-                                                                          alertText = @"This app will not share to Facebook.";
-                                                                          [[[UIAlertView alloc] initWithTitle:alertTitle
-                                                                                                      message:alertText
-                                                                                                     delegate:self
-                                                                                            cancelButtonTitle:@"OK!"
-                                                                                            otherButtonTitles:nil] show];
-                                                                        } else {
-                                                                          // All other errors that can happen need retries
-                                                                          //Get more error information from the error and
-                                                                          NSDictionary *errorInformation = [[[error.userInfo objectForKey:@"com.facebook.sdk:ParsedJSONResponseKey"] objectForKey:@"body"] objectForKey:@"error"];
-                                                                          
-                                                                          // Show the user an error message
-                                                                          alertTitle = @"Something went wrong";
-                                                                          alertText = [NSString stringWithFormat:@"Please retry. \n\n If the problem persists contact us and mention this error code: %@", [errorInformation objectForKey:@"message"]];
-                                                                          [[[UIAlertView alloc] initWithTitle:alertTitle
-                                                                                                      message:alertText
-                                                                                                     delegate:self
-                                                                                            cancelButtonTitle:@"OK!"
-                                                                                            otherButtonTitles:nil] show];
-                                                                        }
-                                                                        
-                                                                      }
+                                                                      NSLog(@"Encountered an error requesting permissions: %@", error.description);
                                                                     }
                                                                   }];
                               
@@ -150,6 +115,9 @@
                               [self pickImageAndPublishStory];
                             }
                             
+                          } else {
+                            // An error occurred
+                            NSLog(@"Encountered an error checking permissions: %@", error.description);
                           }
                         }];
   
@@ -226,57 +194,24 @@
                                 otherButtonTitles:nil] show];
             } else {
               // An error occurred
-              NSLog(@"Encountered an error posting to Open Graph: %@", error);
-            [self handleOGPostingError:error];
+              NSLog(@"Encountered an error posting to Open Graph: %@", error.description);
             }
           }];
           
         } else {
           // An error occurred
-          NSLog(@"Error posting the Open Graph object to the Object API: %@", error);
-          [self handleOGPostingError:error];
+          NSLog(@"Encountered an error posting to Open Graph: %@", error.description);
         }
       }];
       
     } else {
       // An error occurred
-      NSLog(@"Error staging an image: %@", error);
-      [self handleOGPostingError:error];
+      NSLog(@"Error staging an image: %@", error.description);
     }
   }];
   
 }
 
+//--------------------------- end sharing OG story with API calls code -----------------------------
 
-// A function for handling errors
-- (void)handleOGPostingError:(NSError *)error
-{
-  NSString *alertText;
-  NSString *alertTitle;
-  if ([FBErrorUtility shouldNotifyUserForError:error] == YES){
-    // Error requires people using your app to make an action outside of your app to recover
-    alertTitle = @"Something went wrong";
-    alertText = [FBErrorUtility userMessageForError:error];
-    [[[UIAlertView alloc] initWithTitle:alertTitle
-                                message:alertText
-                               delegate:self
-                      cancelButtonTitle:@"OK!"
-                      otherButtonTitles:nil] show];
-  } else {
-    // All other errors that can happen need retries
-    
-    //Get more error information from the error
-    NSDictionary *errorInformation = [[[error.userInfo objectForKey:@"com.facebook.sdk:ParsedJSONResponseKey"] objectForKey:@"body"] objectForKey:@"error"];
-    
-    // Show the user a generic error message
-    alertTitle = @"Something went wrong";
-    alertText = [NSString stringWithFormat:@"Please retry. \n\n If the problem persists contact us and mention this error code: %@", [errorInformation objectForKey:@"message"]];
-    [[[UIAlertView alloc] initWithTitle:alertTitle
-                                message:alertText
-                               delegate:self
-                      cancelButtonTitle:@"OK!"
-                      otherButtonTitles:nil] show];
-    
-  }
-}
 @end

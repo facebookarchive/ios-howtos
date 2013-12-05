@@ -242,7 +242,7 @@
 - (IBAction)ShareLinkWithAPICalls:(id)sender {
   // We will post on behalf of the user, these are the permissions we need:
   NSArray *permissionsNeeded = @[@"publish_actions"];
-  
+
   // Request the permissions the user currently has
   [FBRequestConnection startWithGraphPath:@"/me/permissions"
                         completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
@@ -291,7 +291,7 @@
   // NOTE: pre-filling fields associated with Facebook posts,
   // unless the user manually generated the content earlier in the workflow of your app,
   // can be against the Platform policies: https://developers.facebook.com/policy
-  
+
   // Put together the dialog parameters
   NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                  @"Sharing Tutorial", @"name",
@@ -300,7 +300,8 @@
                                  @"https://developers.facebook.com/docs/ios/share/", @"link",
                                  @"http://i.imgur.com/g3Qc1HN.png", @"picture",
                                  nil];
-  
+
+  // Make the request
   [FBRequestConnection startWithGraphPath:@"/me/feed"
                                parameters:params
                                HTTPMethod:@"POST"
@@ -371,7 +372,7 @@
   // NOTE: pre-filling fields associated with Facebook posts,
   // unless the user manually generated the content earlier in the workflow of your app,
   // can be against the Platform policies: https://developers.facebook.com/policy
-  
+
   [FBRequestConnection startForPostStatusUpdate:@"User-generated status update."
                               completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
                           if (!error) {
