@@ -25,7 +25,10 @@
 
 // IMPORTANT NOTES:
 
-/* In the API calls' error handling in this sample, we don't handle session
+/* This app doesn't do extensive error handling. To learn how to handle errors
+ please visit our Error Handling guide: http://developers.facebook.com/docs/ios/errors */
+
+/* In particular, in the API calls' error handling in this sample, we don't handle session
  closures that happen outside the app. If the session is closed outside the app or
  expires, when the user tries to make an API call by tapping a button, they will
  be shown an error message from [FBErrorUtility userMessageForError:error]
@@ -40,8 +43,6 @@
  we're only calling the methods that publish to Facebook after checking that we have
  the publish_actions permission if we weren't doing this we'd need to handle the 
  FBErrorCategoryPermissions error. */
-
-/* Depending on your app, you may need to do some extra error handling */
 
 // ------------> Login code starts here <------------
 

@@ -6,6 +6,16 @@
 //  Copyright (c) 2013 Facebook Inc. All rights reserved.
 //
 
+/*
+ 
+ FBOGSampleSD publishes an Open Graph (https://developers.facebook.com/products/open-graph/) story using the Share Dialog.
+ Find the tutorial here: https://developers.facebook.com/docs/ios/open-graph)
+ 
+ For simplicity, this sample does limited error handling. You can read more
+ about handling errors in our Error Handling guide:
+ https://developers.facebook.com/docs/ios/errors
+ */
+
 #import <FacebookSDK/FacebookSDK.h>
 #import "OGShareViewController.h"
 
@@ -79,7 +89,8 @@
                                  previewPropertyName:@"dish"
                                              handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
                                                if(error) {
-                                                 // There was an error
+                                                 // An error occurred, we need to handle the error
+                                                 // See: https://developers.facebook.com/docs/ios/errors
                                                  NSLog([NSString stringWithFormat:@"Error publishing story: %@", error.description]);
                                                } else {
                                                  // Success
@@ -105,7 +116,8 @@
                                            parameters:params
                                               handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
                                                 if (error) {
-                                                  // Error launching the dialog or publishing a story.
+                                                  // An error occurred, we need to handle the error
+                                                  // See: https://developers.facebook.com/docs/ios/errors
                                                   NSLog([NSString stringWithFormat:@"Error publishing story: %@", error.description]);
                                                 } else {
                                                   if (result == FBWebDialogResultDialogNotCompleted) {
@@ -116,7 +128,7 @@
                                                     NSDictionary *urlParams = [self parseURLParams:[resultURL query]];
                                                     
                                                     if (![urlParams valueForKey:@"post_id"]) {
-                                                      // User canceled.
+                                                      // User cancelled.
                                                       NSLog(@"User cancelled.");
                                                       
                                                     } else {

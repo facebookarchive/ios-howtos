@@ -6,6 +6,17 @@
 //  Copyright (c) 2013 Facebook Inc. All rights reserved.
 //
 
+/*
+ 
+ FBOGSample publishes an Open Graph (https://developers.facebook.com/products/open-graph/) story using Graph API calls. 
+ This app also implements Facebook Login and asks for the necessary permissions to post to Facebook on the user's behalf. 
+ Find the tutorial here: https://developers.facebook.com/docs/ios/open-graph)
+ 
+ For simplicity, this sample does limited error handling. You can read more
+ about handling errors in our Error Handling guide:
+ https://developers.facebook.com/docs/ios/errors
+*/
+
 #import "OGShareViewController.h"
 
 @interface OGShareViewController ()
@@ -105,7 +116,8 @@
                                                                       }
                                                                       
                                                                     } else {
-                                                                      // An error occurred
+                                                                      // An error occurred, we need to handle the error
+                                                                      // See: https://developers.facebook.com/docs/ios/errors
                                                                       NSLog(@"Encountered an error requesting permissions: %@", error.description);
                                                                     }
                                                                   }];
@@ -116,7 +128,8 @@
                             }
                             
                           } else {
-                            // An error occurred
+                            // An error occurred, we need to handle the error
+                            // See: https://developers.facebook.com/docs/ios/errors
                             NSLog(@"Encountered an error checking permissions: %@", error.description);
                           }
                         }];
@@ -193,19 +206,22 @@
                                 cancelButtonTitle:@"OK!"
                                 otherButtonTitles:nil] show];
             } else {
-              // An error occurred
+              // An error occurred, we need to handle the error
+              // See: https://developers.facebook.com/docs/ios/errors
               NSLog(@"Encountered an error posting to Open Graph: %@", error.description);
             }
           }];
           
         } else {
-          // An error occurred
+          // An error occurred, we need to handle the error
+          // See: https://developers.facebook.com/docs/ios/errors
           NSLog(@"Encountered an error posting to Open Graph: %@", error.description);
         }
       }];
       
     } else {
-      // An error occurred
+      // An error occurred, we need to handle the error
+      // See: https://developers.facebook.com/docs/ios/errors
       NSLog(@"Error staging an image: %@", error.description);
     }
   }];

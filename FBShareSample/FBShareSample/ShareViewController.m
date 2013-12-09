@@ -6,6 +6,16 @@
 //  Copyright (c) 2013 Facebook Inc. All rights reserved.
 //
 
+/*
+ FBShareSample shows how to publish a link and a status updates using both methods: the Share Dialog and Graph API calls.
+ This sample also implements Login with Facebook. Login with Facebook is only needed to share using API calls.
+ Find the tutorial [here](https://developers.facebook.com/docs/ios/share).
+ 
+ For simplicity, this sample does limited error handling. You can read more
+ about handling errors in our Error Handling guide:
+ https://developers.facebook.com/docs/ios/errors
+ */
+
 #import <FacebookSDK/FacebookSDK.h>
 
 #import "ShareViewController.h"
@@ -109,7 +119,8 @@
                               clientState:nil
                                   handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
                                     if(error) {
-                                      // There was an error
+                                      // An error occurred, we need to handle the error
+                                      // See: https://developers.facebook.com/docs/ios/errors
                                       NSLog([NSString stringWithFormat:@"Error publishing story: %@", error.description]);
                                     } else {
                                         // Success
@@ -135,7 +146,8 @@
                                            parameters:params
                                               handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
                                                 if (error) {
-                                                  // Error launching the dialog or publishing a story.
+                                                  // An error occurred, we need to handle the error
+                                                  // See: https://developers.facebook.com/docs/ios/errors
                                                   NSLog([NSString stringWithFormat:@"Error publishing story: %@", error.description]);
                                                 } else {
                                                   if (result == FBWebDialogResultDialogNotCompleted) {
@@ -178,7 +190,8 @@
     [FBDialogs presentShareDialogWithLink:nil
                                   handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
                                     if(error) {
-                                      // There was an error
+                                      // An error occurred, we need to handle the error
+                                      // See: https://developers.facebook.com/docs/ios/errors
                                       NSLog([NSString stringWithFormat:@"Error publishing story: %@", error.description]);
                                     } else {
                                       // Success
@@ -194,18 +207,19 @@
                                            parameters:nil
                                               handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
                                                 if (error) {
-                                                  // Error launching the dialog or publishing a story.
+                                                  // An error occurred, we need to handle the error
+                                                  // See: https://developers.facebook.com/docs/ios/errors
                                                   NSLog([NSString stringWithFormat:@"Error publishing story: %@", error.description]);
                                                 } else {
                                                   if (result == FBWebDialogResultDialogNotCompleted) {
-                                                    // User canceled.
+                                                    // User cancelled.
                                                     NSLog(@"User cancelled.");
                                                   } else {
                                                     // Handle the publish feed callback
                                                     NSDictionary *urlParams = [self parseURLParams:[resultURL query]];
                                                     
                                                     if (![urlParams valueForKey:@"post_id"]) {
-                                                      // User canceled.
+                                                      // User cancelled.
                                                       NSLog(@"User cancelled.");
                                                       
                                                     } else {
@@ -310,7 +324,8 @@
                             // Link posted successfully to Facebook
                             NSLog([NSString stringWithFormat:@"result: %@", result]);
                           } else {
-                            // There was an error
+                            // An error occurred, we need to handle the error
+                            // See: https://developers.facebook.com/docs/ios/errors
                             NSLog([NSString stringWithFormat:@"%@", error.description]);
                           }
                         }];
@@ -379,7 +394,8 @@
                             // Status update posted successfully to Facebook
                             NSLog([NSString stringWithFormat:@"result: %@", result]);
                           } else {
-                            // There was an error
+                            // An error occurred, we need to handle the error
+                            // See: https://developers.facebook.com/docs/ios/errors
                             NSLog([NSString stringWithFormat:@"%@", error.description]);
                           }
                         }];

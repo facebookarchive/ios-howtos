@@ -6,6 +6,16 @@
 //  Copyright (c) 2013 Facebook Inc. All rights reserved.
 //
 
+/* This sample implements Login with Facebook using the standard Login button. 
+ It asks for the basic_info, email and user_likes permissions.
+ You can see the tutorial that accompanies this sample here:
+ https://developers.facebook.com/docs/ios/login-tutorial/#login-button
+ 
+ For simplicity, this sample does limited error handling. You can read more
+ about handling errors in our Error Handling guide:
+ https://developers.facebook.com/docs/ios/errors
+*/
+
 #import "LoginUIViewController.h"
 
 @interface LoginUIViewController ()

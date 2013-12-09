@@ -6,6 +6,16 @@
 //  Copyright (c) 2013 Facebook Inc. All rights reserved.
 //
 
+/* This sample implements Login with Facebook using API calls and a custom button.
+ It checks for a cached session when a person opens the app, and if there is one, it is opened.
+ You can see the tutorial that accompanies this sample here:
+ https://developers.facebook.com/docs/ios/login-tutorial/#login-apicalls
+ 
+ For simplicity, this sample does limited error handling. You can read more
+ about handling errors in our Error Handling guide:
+ https://developers.facebook.com/docs/ios/errors
+ */
+
 #import "AppDelegate.h"
 
 @implementation AppDelegate
@@ -85,14 +95,14 @@
         alertText = @"Your current session is no longer valid. Please log in again.";
         [self showMessage:alertText withTitle:alertTitle];
         
-      // All other errors that can happen need retries
-      // more info: https://github.com/facebook/facebook-ios-sdk/blob/master/src/FBError.h#L163
+      // For simplicity, here we just show a generic message for all other errors
+      // You can learn how to handle other errors using our guide: https://developers.facebook.com/docs/ios/errors
       } else {
         //Get more error information from the error
         NSDictionary *errorInformation = [[[error.userInfo objectForKey:@"com.facebook.sdk:ParsedJSONResponseKey"] objectForKey:@"body"] objectForKey:@"error"];
         
         // Show the user an error message
-        alertTitle = @"Something went wrong :S";
+        alertTitle = @"Something went wrong";
         alertText = [NSString stringWithFormat:@"Please retry. \n\n If the problem persists contact us and mention this error code: %@", [errorInformation objectForKey:@"message"]];
         [self showMessage:alertText withTitle:alertTitle];
       }
