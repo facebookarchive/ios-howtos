@@ -63,12 +63,24 @@ typedef void (^FBInstallResponseDataHandler)(FBGraphObject *response, NSError *e
  in release builds.
  */
 typedef enum : NSUInteger {
-  FBBetaFeaturesNone                 = 0,
+    FBBetaFeaturesNone                  = 0,
 #if defined(DEBUG) || defined(FB_BUILD_ONLY)
-  FBBetaFeaturesShareDialog          = 1 << 0,
-  FBBetaFeaturesOpenGraphShareDialog = 1 << 1,
+    FBBetaFeaturesShareDialog           = 1 << 0,
+    FBBetaFeaturesOpenGraphShareDialog  = 1 << 1,
 #endif
 } FBBetaFeatures;
+
+/*!
+ @typedef
+ @abstract Indicates if this app should be restricted
+ */
+typedef NS_ENUM(NSUInteger, FBRestrictedTreatment) {
+    /*! The default treatment indicating the app is not restricted. */
+    FBRestrictedTreatmentNO = 0,
+
+    /*! Indicates the app is restricted. */
+    FBRestrictedTreatmentYES = 1
+};
 
 @interface FBSettings : NSObject
 
@@ -192,7 +204,7 @@ typedef enum : NSUInteger {
 
  @param appID The default Facebook App ID to be used by the SDK.
  */
-+ (void)setDefaultAppID:(NSString*)appID;
++ (void)setDefaultAppID:(NSString *)appID;
 
 /*!
  @method
@@ -201,7 +213,7 @@ typedef enum : NSUInteger {
  set, the default will be read from the application's plist. The SDK allows the appID
  to be overridden per instance in certain cases (e.g. per instance of FBSession)
  */
-+ (NSString*)defaultAppID;
++ (NSString *)defaultAppID;
 
 /*!
  @method
@@ -210,7 +222,7 @@ typedef enum : NSUInteger {
 
  @param urlSchemeSuffix The default url scheme suffix to be used by the SDK.
  */
-+ (void)setDefaultUrlSchemeSuffix:(NSString*)urlSchemeSuffix;
++ (void)setDefaultUrlSchemeSuffix:(NSString *)urlSchemeSuffix;
 
 /*!
  @method
@@ -218,7 +230,7 @@ typedef enum : NSUInteger {
  @abstract Get the default url scheme suffix used for sessions.  If not
  explicitly set, the default will be read from the application's plist value for 'FacebookUrlSchemeSuffix'.
  */
-+ (NSString*)defaultUrlSchemeSuffix;
++ (NSString *)defaultUrlSchemeSuffix;
 
 /*!
  @method
@@ -227,14 +239,14 @@ typedef enum : NSUInteger {
 
  @param bundleName The name of the bundle (MyFBBundle).
  */
-+ (void)setResourceBundleName:(NSString*)bundleName;
++ (void)setResourceBundleName:(NSString *)bundleName;
 
 /*!
  @method
 
  @abstract Get the name of the bundle to override the SDK images and text
  */
-+ (NSString*)resourceBundleName;
++ (NSString *)resourceBundleName;
 
 /*!
  @method
@@ -243,14 +255,14 @@ typedef enum : NSUInteger {
 
  @param facebookDomainPart The domain part to be inserted into facebook.com
  */
-+ (void)setFacebookDomainPart:(NSString*)facebookDomainPart;
++ (void)setFacebookDomainPart:(NSString *)facebookDomainPart;
 
 /*!
  @method
 
  @abstract Get the Facebook domain part
  */
-+ (NSString*)facebookDomainPart;
++ (NSString *)facebookDomainPart;
 
 /*!
  @method
@@ -296,7 +308,7 @@ typedef enum : NSUInteger {
 
 /*!
  @method
- 
+
  @abstract
  Gets whether data such as that generated through FBAppEvents and sent to Facebook should be restricted from being used for other than analytics and conversions.  Defaults to NO.  This value is stored on the device and persists across app launches.
  */
@@ -304,10 +316,10 @@ typedef enum : NSUInteger {
 
 /*!
  @method
- 
+
  @abstract
  Sets whether data such as that generated through FBAppEvents and sent to Facebook should be restricted from being used for other than analytics and conversions.  Defaults to NO.  This value is stored on the device and persists across app launches.
- 
+
  @param limitEventAndDataUsage   The desired value.
  */
 + (void)setLimitEventAndDataUsage:(BOOL)limitEventAndDataUsage;

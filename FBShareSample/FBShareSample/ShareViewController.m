@@ -23,7 +23,7 @@
 @interface ShareViewController ()
 @property (strong, nonatomic) IBOutlet UIButton *ShareLinkWithShareDialogButton;
 @property (strong, nonatomic) IBOutlet UIButton *ShareLinkWithAPICallsButton;
-
+@property (strong, nonatomic) IBOutlet UIButton *SharePhotoWithShareDialogButton;
 @property (strong, nonatomic) IBOutlet UIButton *StatusUpdateWithShareDialogButton;
 @property (strong, nonatomic) IBOutlet UIButton *StatusUpdateWithAPICallsButton;
 
@@ -121,7 +121,7 @@
                                     if(error) {
                                       // An error occurred, we need to handle the error
                                       // See: https://developers.facebook.com/docs/ios/errors
-                                      NSLog([NSString stringWithFormat:@"Error publishing story: %@", error.description]);
+                                      NSLog(@"Error publishing story: %@", error.description);
                                     } else {
                                         // Success
                                         NSLog(@"result %@", results);
@@ -148,7 +148,7 @@
                                                 if (error) {
                                                   // An error occurred, we need to handle the error
                                                   // See: https://developers.facebook.com/docs/ios/errors
-                                                  NSLog([NSString stringWithFormat:@"Error publishing story: %@", error.description]);
+                                                  NSLog(@"Error publishing story: %@", error.description);
                                                 } else {
                                                   if (result == FBWebDialogResultDialogNotCompleted) {
                                                     // User canceled.
@@ -192,7 +192,7 @@
                                     if(error) {
                                       // An error occurred, we need to handle the error
                                       // See: https://developers.facebook.com/docs/ios/errors
-                                      NSLog([NSString stringWithFormat:@"Error publishing story: %@", error.description]);
+                                      NSLog(@"Error publishing story: %@", error.description);
                                     } else {
                                       // Success
                                       NSLog(@"result %@", results);
@@ -209,7 +209,7 @@
                                                 if (error) {
                                                   // An error occurred, we need to handle the error
                                                   // See: https://developers.facebook.com/docs/ios/errors
-                                                  NSLog([NSString stringWithFormat:@"Error publishing story: %@", error.description]);
+                                                  NSLog(@"Error publishing story: %@", error.description);
                                                 } else {
                                                   if (result == FBWebDialogResultDialogNotCompleted) {
                                                     // User cancelled.
@@ -251,6 +251,60 @@
 
 //------------------------------------
 
+
+//------------------Sharing a photo using the Share Dialog ------------------
+
+- (IBAction)SharePhotoWithShareDialog:(id)sender {
+  
+  // If the Facebook app is installed and we can present the share dialog
+  if([FBDialogs canPresentShareDialogWithPhotos]) {
+      NSLog(@"canPresent");
+      // Retrieve a picture from the device's photo library
+      /*
+       NOTE: SDK Image size limits are 480x480px minimum resolution to 12MB maximum file size.
+       In this app we're not making sure that our image is within those limits but you should.
+       Error code for images that go below or above the size limits is 102.
+       */
+      UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+      [imagePicker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+      [imagePicker setDelegate:self];
+      [self presentViewController:imagePicker animated:YES completion:nil];
+    
+  } else {
+      //The user doesn't have the Facebook for iOS app installed, so we can't present the Share Dialog
+      /*Fallback: You have two options
+        1. Share the photo as a Custom Story using a "share a photo" Open Graph action, and publish it using API calls.
+           See our Custom Stories tutorial: https://developers.facebook.com/docs/ios/open-graph
+        2. Upload the photo making a requestForUploadPhoto
+           See the reference: https://developers.facebook.com/docs/reference/ios/current/class/FBRequest/#requestForUploadPhoto:
+       */
+  }
+
+  
+}
+
+// When the user is done picking the image
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+  UIImage *img = [info objectForKey:UIImagePickerControllerOriginalImage];
+  
+  FBShareDialogPhotoParams *params = [[FBShareDialogPhotoParams alloc] init];
+  params.photos = @[img];
+  
+  [FBDialogs presentShareDialogWithPhotoParams:params
+                                   clientState:nil
+                                       handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
+                                         if (error) {
+                                           NSLog(@"Error: %@", error.description);
+                                         } else {
+                                           NSLog(@"Success!");
+                                         }
+                                    }];
+  
+}
+
+//------------------------------------
+
+
 //------------------Sharing a link using API calls------------------
 
 - (IBAction)ShareLinkWithAPICalls:(id)sender {
@@ -284,7 +338,7 @@
                                                                     } else {
                                                                       // An error occurred, handle the error
                                                                       // See our Handling Errors guide: https://developers.facebook.com/docs/ios/errors/
-                                                                      NSLog([NSString stringWithFormat:@"%@", error.description]);
+                                                                      NSLog(@"%@", error.description);
                                                                     }
                                                                   }];
                             } else {
@@ -295,7 +349,7 @@
                           } else {
                             // There was an error requesting the permission information
                             // See our Handling Errors guide: https://developers.facebook.com/docs/ios/errors/
-                            NSLog([NSString stringWithFormat:@"%@", error.description]);
+                            NSLog(@"%@", error.description);
                           }
                         }];
 }
@@ -322,11 +376,11 @@
                         completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
                           if (!error) {
                             // Link posted successfully to Facebook
-                            NSLog([NSString stringWithFormat:@"result: %@", result]);
+                            NSLog(@"result: %@", result);
                           } else {
                             // An error occurred, we need to handle the error
                             // See: https://developers.facebook.com/docs/ios/errors
-                            NSLog([NSString stringWithFormat:@"%@", error.description]);
+                            NSLog(@"%@", error.description);
                           }
                         }];
 }
@@ -366,7 +420,7 @@
                                                                     } else {
                                                                       // An error occurred, handle the error
                                                                       // See our Handling Errors guide: https://developers.facebook.com/docs/ios/errors/
-                                                                      NSLog([NSString stringWithFormat:@"%@", error.description]);
+                                                                      NSLog(@"%@", error.description);
                                                                     }
                                                                   }];
                             } else {
@@ -377,7 +431,7 @@
                           } else {
                             // There was an error requesting the permission information
                             // See our Handling Errors guide: https://developers.facebook.com/docs/ios/errors/
-                            NSLog([NSString stringWithFormat:@"%@", error.description]);
+                            NSLog(@"%@", error.description);
                           }
                         }];
 }
@@ -392,11 +446,11 @@
                               completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
                           if (!error) {
                             // Status update posted successfully to Facebook
-                            NSLog([NSString stringWithFormat:@"result: %@", result]);
+                            NSLog(@"result: %@", result);
                           } else {
                             // An error occurred, we need to handle the error
                             // See: https://developers.facebook.com/docs/ios/errors
-                            NSLog([NSString stringWithFormat:@"%@", error.description]);
+                            NSLog(@"%@", error.description);
                           }
                         }];
 }

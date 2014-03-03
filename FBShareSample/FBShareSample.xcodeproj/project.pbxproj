@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EDD7DFF817F9CFF2008D9BC7 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDD7DFF717F9CFF2008D9BC7 /* FacebookSDK.framework */; };
 		EDD7DFFC17F9E022008D9BC7 /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDD7DFFA17F9E022008D9BC7 /* ShareViewController.m */; };
 		EDD7DFFD17F9E022008D9BC7 /* ShareViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EDD7DFFB17F9E022008D9BC7 /* ShareViewController.xib */; };
+		EDE24E0518C1034700871247 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDE24E0418C1034700871247 /* FacebookSDK.framework */; };
 		EDE9779B17F4D47B001D4B2D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDE9779A17F4D47B001D4B2D /* Foundation.framework */; };
 		EDE9779D17F4D47B001D4B2D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDE9779C17F4D47B001D4B2D /* CoreGraphics.framework */; };
 		EDE9779F17F4D47B001D4B2D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDE9779E17F4D47B001D4B2D /* UIKit.framework */; };
@@ -35,10 +35,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		EDD7DFF717F9CFF2008D9BC7 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../FacebookSDK.framework; sourceTree = "<group>"; };
 		EDD7DFF917F9E022008D9BC7 /* ShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareViewController.h; sourceTree = "<group>"; };
 		EDD7DFFA17F9E022008D9BC7 /* ShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareViewController.m; sourceTree = "<group>"; };
 		EDD7DFFB17F9E022008D9BC7 /* ShareViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShareViewController.xib; sourceTree = "<group>"; };
+		EDE24E0418C1034700871247 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../FacebookSDK.framework; sourceTree = "<group>"; };
 		EDE9779717F4D47B001D4B2D /* FBShareSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FBShareSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDE9779A17F4D47B001D4B2D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		EDE9779C17F4D47B001D4B2D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -63,7 +63,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EDE9779D17F4D47B001D4B2D /* CoreGraphics.framework in Frameworks */,
-				EDD7DFF817F9CFF2008D9BC7 /* FacebookSDK.framework in Frameworks */,
+				EDE24E0518C1034700871247 /* FacebookSDK.framework in Frameworks */,
 				EDE9779F17F4D47B001D4B2D /* UIKit.framework in Frameworks */,
 				EDE9779B17F4D47B001D4B2D /* Foundation.framework in Frameworks */,
 			);
@@ -104,7 +104,7 @@
 		EDE9779917F4D47B001D4B2D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				EDD7DFF717F9CFF2008D9BC7 /* FacebookSDK.framework */,
+				EDE24E0418C1034700871247 /* FacebookSDK.framework */,
 				EDE9779A17F4D47B001D4B2D /* Foundation.framework */,
 				EDE9779C17F4D47B001D4B2D /* CoreGraphics.framework */,
 				EDE9779E17F4D47B001D4B2D /* UIKit.framework */,
@@ -376,6 +376,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/..",
+					"/Users/luz/ios/ios-howtos",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FBShareSample/FBShareSample-Prefix.pch";
@@ -395,6 +396,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/..",
+					"/Users/luz/ios/ios-howtos",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FBShareSample/FBShareSample-Prefix.pch";
