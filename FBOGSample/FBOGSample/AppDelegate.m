@@ -57,7 +57,7 @@
                         otherButtonTitles:nil] show];
     } else {
       //
-      NSLog([NSString stringWithFormat:@"Unhandled deep link: %@", [[call appLinkData] targetURL]]);
+      NSLog(@"Unhandled deep link: %@", [[call appLinkData] targetURL]);
     }
   }];
   

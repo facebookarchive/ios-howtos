@@ -30,7 +30,7 @@
 
 - (void) viewDidLoad {
   // Ask for basic permissions on login
-  [_fbLoginView setReadPermissions:@[@"basic_info"]];
+  [_fbLoginView setReadPermissions:@[@"public_profile"]];
   [_fbLoginView setDelegate:self];
 }
 
@@ -190,7 +190,7 @@
         if(!error) {
           // get the object ID for the Open Graph object that is now stored in the Object API
           NSString *objectId = [result objectForKey:@"id"];
-          NSLog([NSString stringWithFormat:@"object id: %@", objectId]);
+          NSLog(@"object id: %@", objectId);
           
           // create an Open Graph action
           id<FBOpenGraphAction> action = (id<FBOpenGraphAction>)[FBGraphObject graphObject];
@@ -199,7 +199,7 @@
           // create action referencing user owned object
           [FBRequestConnection startForPostWithGraphPath:@"/me/fbogsample:eat" graphObject:action completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
             if(!error) {
-              NSLog([NSString stringWithFormat:@"OG story posted, story id: %@", [result objectForKey:@"id"]]);
+              NSLog(@"OG story posted, story id: %@", [result objectForKey:@"id"]);
               [[[UIAlertView alloc] initWithTitle:@"OG story posted"
                                           message:@"Check your Facebook profile or activity log to see the story."
                                          delegate:self

@@ -8,7 +8,7 @@
 
 #import "GraphAPICallsViewController.h"
 
-@interface GraphAPICallsViewController ()
+@interface GraphAPICallsViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet FBProfilePictureView *profilePictureView;
 @property (strong, nonatomic) IBOutlet FBLoginView *fbLoginView;
@@ -48,7 +48,7 @@
 
 - (void) viewDidLoad {
   // Ask for basic permissions on login
-  [_fbLoginView setReadPermissions:@[@"basic_info"]];
+  [_fbLoginView setReadPermissions:@[@"public_profile"]];
   [_fbLoginView setDelegate:self];
   _objectID = nil;
 }
@@ -132,7 +132,7 @@
 
 /* 
   This function asks for the user's public profile and birthday.
-  It first checks for the existence of the basic_info and user_birthday permissions
+  It first checks for the existence of the public_profile and user_birthday permissions
   If the permissions are not present, it requests them
   If/once the permissions are present, it makes the user info request
 */
@@ -141,7 +141,7 @@
 {
   // We will request the user's public picture and the user's birthday
   // These are the permissions we need:
-  NSArray *permissionsNeeded = @[@"basic_info", @"user_birthday"];
+  NSArray *permissionsNeeded = @[@"public_profile", @"user_birthday"];
 
   // Request the permissions the user currently has
   [FBRequestConnection startWithGraphPath:@"/me/permissions"
@@ -173,7 +173,7 @@
                                          } else {
                                            // An error occurred, we need to handle the error
                                            // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
-                                           NSLog([NSString stringWithFormat:@"error %@", error.description]);
+                                           NSLog(@"error %@", error.description);
                                          }
                                        }];
                             } else {
@@ -185,7 +185,7 @@
                           } else {
                             // An error occurred, we need to handle the error
                             // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
-                            NSLog([NSString stringWithFormat:@"error %@", error.description]);
+                            NSLog(@"error %@", error.description);
                           }
                         }];
   
@@ -198,11 +198,11 @@
   [FBRequestConnection startForMeWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
     if (!error) {
       // Success! Include your code to handle the results here
-      NSLog([NSString stringWithFormat:@"user info: %@", result]);
+      NSLog(@"user info: %@", result);
     } else {
       // An error occurred, we need to handle the error
       // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
-      NSLog([NSString stringWithFormat:@"error %@", error.description]);
+      NSLog(@"error %@", error.description);
     }
   }];
 }
@@ -213,7 +213,7 @@
 
 /*
  This function asks for the user's (upcoming) events, and for those events retrieves the name, the start_time and the cover picture.
- It first checks for the existence of the basic_info and user_events permissions
+ It first checks for the existence of the public_profile and user_events permissions
  If the permissions are not present, it requests them
  If/once the permissions are present, it makes the user events request with field expansion for name, start_time and cover picture.
  */
@@ -229,7 +229,7 @@
                         completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
                           if (!error){
                             NSDictionary *currentPermissions= [(NSArray *)[result data] objectAtIndex:0];
-                            NSLog([NSString stringWithFormat:@"current permissions %@", currentPermissions]);
+                            NSLog(@"current permissions %@", currentPermissions);
                             NSMutableArray *requestPermissions = [[NSMutableArray alloc] initWithArray:@[]];
                             
                             // Check if all the permissions we need are present in the user's current permissions
@@ -247,13 +247,13 @@
                                                                completionHandler:^(FBSession *session, NSError *error) {
                                                                  if (!error) {
                                                                    // Permission granted
-                                                                   NSLog([NSString stringWithFormat:@"new permissions %@", [FBSession.activeSession permissions]]);
+                                                                   NSLog(@"new permissions %@", [FBSession.activeSession permissions]);
                                                                    // We can request the user information
                                                                    [self makeRequestForUserEvents];
                                                                  } else {
                                                                    // An error occurred, we need to handle the error
                                                                    // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
-                                                                   NSLog([NSString stringWithFormat:@"error %@", error.description]);
+                                                                   NSLog(@"error %@", error.description);
                                                                  }
                                                                }];
                             } else {
@@ -265,7 +265,7 @@
                           } else {
                             // An error occurred, we need to handle the error
                             // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
-                            NSLog([NSString stringWithFormat:@"error %@", error.description]);
+                            NSLog(@"error %@", error.description);
                           }
                         }];
 }
@@ -276,11 +276,11 @@
                         completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
     if (!error) {
       // Success! Include your code to handle the results here
-      NSLog([NSString stringWithFormat:@"user events: %@", result]);
+      NSLog(@"user events: %@", result);
     } else {
       // An error occurred, we need to handle the error
       // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
-      NSLog([NSString stringWithFormat:@"error %@", error.description]);
+      NSLog(@"error %@", error.description);
     }
   }];
 }
@@ -311,7 +311,7 @@
                         completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
                           if (!error){
                             NSDictionary *currentPermissions= [(NSArray *)[result data] objectAtIndex:0];
-                            NSLog([NSString stringWithFormat:@"current permissions %@", currentPermissions]);
+                            NSLog(@"current permissions %@", currentPermissions);
                             NSMutableArray *requestPermissions = [[NSMutableArray alloc] initWithArray:@[]];
                             
                             // Check if all the permissions we need are present in the user's current permissions
@@ -330,13 +330,13 @@
                                                                   completionHandler:^(FBSession *session, NSError *error) {
                                                                      if (!error) {
                                                                        // Permission granted
-                                                                       NSLog([NSString stringWithFormat:@"new permissions %@", [FBSession.activeSession permissions]]);
+                                                                       NSLog(@"new permissions %@", [FBSession.activeSession permissions]);
                                                                        // We can request the user information
                                                                        [self makeRequestToPostObject];
                                                                      } else {
                                                                        // An error occurred, we need to handle the error
                                                                        // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
-                                                                       NSLog([NSString stringWithFormat:@"error %@", error.description]);
+                                                                       NSLog(@"error %@", error.description);
                                                                      }
                                                                    }];
                             } else {
@@ -348,7 +348,7 @@
                           } else {
                             // An error occurred, we need to handle the error
                             // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
-                            NSLog([NSString stringWithFormat:@"error %@", error.description]);
+                            NSLog(@"error %@", error.description);
                           }
                         }];
 }
@@ -370,71 +370,69 @@
 // When the user is done picking the image
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-  
-  // Get the UIImage
-  NSArray* image = [info objectForKey:UIImagePickerControllerOriginalImage];
-  
-  // Dismiss the image picker off the screen
-  [self dismissViewControllerAnimated:YES completion:nil];
-  
-  // stage the image
-  [FBRequestConnection startForUploadStagingResourceWithImage:image completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-    __block NSString *alertText;
-    __block NSString *alertTitle;
-    if(!error) {
-      NSLog(@"Successfuly staged image with staged URI: %@", [result objectForKey:@"uri"]);
-      
-      // Package image inside a dictionary, inside an array like we'll need it for the object
-      NSArray *image = @[@{@"url": [result objectForKey:@"uri"], @"user_generated" : @"true" }];
-      
-      // Create an object
-      NSMutableDictionary<FBOpenGraphObject> *restaurant = [FBGraphObject openGraphObjectForPost];
-
-      // specify that this Open Graph object will be posted to Facebook
-      restaurant.provisionedForPost = YES;
-
-      // Add the standard object properties
-      restaurant[@"og"] = @{ @"title":@"mytitle", @"type":@"restaurant.restaurant", @"description":@"my description", @"image":image };
-
-      // Add the properties restaurant inherits from place
-      restaurant[@"place"] = @{ @"location" : @{ @"longitude": @"-58.381667", @"latitude":@"-34.603333"} };
-
-      // Add the properties particular to the type restaurant.restaurant
-      restaurant[@"restaurant"] = @{@"category": @[@"Mexican"],
-                               @"contact_info": @{@"street_address": @"123 Some st",
-                                                  @"locality": @"Menlo Park",
-                                                  @"region": @"CA",
-                                                  @"phone_number": @"555-555-555",
-                                                  @"website": @"http://www.example.com"}};
-
-      // Make the Graph API request to post the object
-      FBRequest *request = [FBRequest requestForPostWithGraphPath:@"me/objects/restaurant.restaurant"
-                                                      graphObject:@{@"object":restaurant}];
-      [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-        if (!error) {
-          // Success! Include your code to handle the results here
-          NSLog([NSString stringWithFormat:@"result: %@", result]);
-          _objectID = [result objectForKey:@"id"];
-          alertTitle = @"Object successfully created";
-          alertText = [NSString stringWithFormat:@"An object with id %@ has been created", _objectID];
-          [[[UIAlertView alloc] initWithTitle:alertTitle
-                                      message:alertText
-                                     delegate:self
-                            cancelButtonTitle:@"OK!"
-                            otherButtonTitles:nil] show];
+    // Get the UIImage
+    UIImage *image = info[UIImagePickerControllerOriginalImage];
+    
+    // Dismiss the image picker off the screen
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    // stage the image
+    [FBRequestConnection startForUploadStagingResourceWithImage:image completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+        __block NSString *alertText;
+        __block NSString *alertTitle;
+        if(!error) {
+            NSLog(@"Successfuly staged image with staged URI: %@", [result objectForKey:@"uri"]);
+            
+            // Package image inside a dictionary, inside an array like we'll need it for the object
+            NSArray *image = @[@{@"url": [result objectForKey:@"uri"], @"user_generated" : @"true" }];
+            
+            // Create an object
+            NSMutableDictionary<FBOpenGraphObject> *restaurant = [FBGraphObject openGraphObjectForPost];
+            
+            // specify that this Open Graph object will be posted to Facebook
+            restaurant.provisionedForPost = YES;
+            
+            // Add the standard object properties
+            restaurant[@"og"] = @{ @"title":@"mytitle", @"type":@"restaurant.restaurant", @"description":@"my description", @"image":image };
+            
+            // Add the properties restaurant inherits from place
+            restaurant[@"place"] = @{ @"location" : @{ @"longitude": @"-58.381667", @"latitude":@"-34.603333"} };
+            
+            // Add the properties particular to the type restaurant.restaurant
+            restaurant[@"restaurant"] = @{@"category": @[@"Mexican"],
+                                          @"contact_info": @{@"street_address": @"123 Some st",
+                                                             @"locality": @"Menlo Park",
+                                                             @"region": @"CA",
+                                                             @"phone_number": @"555-555-555",
+                                                             @"website": @"http://www.example.com"}};
+            
+            // Make the Graph API request to post the object
+            FBRequest *request = [FBRequest requestForPostWithGraphPath:@"me/objects/restaurant.restaurant"
+                                                            graphObject:@{@"object":restaurant}];
+            [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                if (!error) {
+                    // Success! Include your code to handle the results here
+                    NSLog(@"result: %@", result);
+                    _objectID = [result objectForKey:@"id"];
+                    alertTitle = @"Object successfully created";
+                    alertText = [NSString stringWithFormat:@"An object with id %@ has been created", _objectID];
+                    [[[UIAlertView alloc] initWithTitle:alertTitle
+                                                message:alertText
+                                               delegate:self
+                                      cancelButtonTitle:@"OK!"
+                                      otherButtonTitles:nil] show];
+                } else {
+                    // An error occurred, we need to handle the error
+                    // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
+                    NSLog(@"error %@", error.description);
+                }
+            }];
         } else {
-          // An error occurred, we need to handle the error
-          // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
-          NSLog([NSString stringWithFormat:@"error %@", error.description]);
+            // An error occurred, we need to handle the error
+            // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
+            NSLog(@"error %@", error.description);
         }
-      }];
-      
-    } else {
-      // An error occurred, we need to handle the error
-      // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
-      NSLog([NSString stringWithFormat:@"error %@", error.description]);
-    }
-  }];
+    }];
 }
 
 // ------------> Code for posting an object ends here <------------
@@ -459,10 +457,10 @@
                               if (error) {
                                 // An error occurred, we need to handle the error
                                 // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
-                                NSLog([NSString stringWithFormat:@"error %@", error.description]);
+                                NSLog(@"error %@", error.description);
                               } else {
                                 // The object has been removed
-                                NSLog([NSString stringWithFormat:@"The object with id %@ has been deleted", objectID]);
+                                NSLog(@"The object with id %@ has been deleted", objectID);
                                 alertTitle = @"Object successfully deleted";
                                 alertText = [NSString stringWithFormat:@"The object with id %@ has been deleted", objectID];
                                 [[[UIAlertView alloc] initWithTitle:alertTitle
@@ -491,11 +489,9 @@
   // Request the permissions the user currently has
   [FBRequestConnection startWithGraphPath:@"/me/permissions"
                         completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-                          __block NSString *alertText;
-                          __block NSString *alertTitle;
                           if (!error){
                             NSDictionary *currentPermissions= [(NSArray *)[result data] objectAtIndex:0];
-                            NSLog([NSString stringWithFormat:@"current permissions %@", currentPermissions]);
+                            NSLog(@"current permissions %@", currentPermissions);
                             NSMutableArray *requestPermissions = [[NSMutableArray alloc] initWithArray:@[]];
                             
                             // Check if all the permissions we need are present in the user's current permissions
@@ -514,13 +510,13 @@
                                                                   completionHandler:^(FBSession *session, NSError *error) {
                                                                     if (!error) {
                                                                       // Permission granted
-                                                                      NSLog([NSString stringWithFormat:@"new permissions %@", [FBSession.activeSession permissions]]);
+                                                                      NSLog(@"new permissions %@", [FBSession.activeSession permissions]);
                                                                       // We can request the user information
                                                                       [self makeRequestToPostStory];
                                                                     } else {
                                                                       // An error occurred, we need to handle the error
                                                                       // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
-                                                                      NSLog([NSString stringWithFormat:@"error %@", error.description]);
+                                                                      NSLog(@"error %@", error.description);
                                                                     }
                                                                   }];
                             } else {
@@ -532,7 +528,7 @@
                           } else {
                             // An error occurred, we need to handle the error
                             // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
-                            NSLog([NSString stringWithFormat:@"error %@", error.description]);
+                            NSLog(@"error %@", error.description);
                           }
                         }];
 }
@@ -560,7 +556,7 @@
                                    __block NSString *alertTitle;
                                    if (!error) {
                                      // Success, the restaurant has been liked
-                                     NSLog([NSString stringWithFormat:@"Posted OG action, id: %@", [result objectForKey:@"id"]]);
+                                     NSLog(@"Posted OG action, id: %@", [result objectForKey:@"id"]);
                                      alertText = [NSString stringWithFormat:@"Posted OG action, id: %@", [result objectForKey:@"id"]];
                                      alertTitle = @"Success";
                                      [[[UIAlertView alloc] initWithTitle:alertTitle
@@ -571,7 +567,7 @@
                                    } else {
                                      // An error occurred, we need to handle the error
                                      // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
-                                     NSLog([NSString stringWithFormat:@"error %@", error.description]);
+                                     NSLog(@"error %@", error.description);
                                    }
                                  }];
 

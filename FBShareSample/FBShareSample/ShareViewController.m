@@ -19,18 +19,32 @@
 #import <FacebookSDK/FacebookSDK.h>
 
 #import "ShareViewController.h"
+#import "AppDelegate.h"
 
-@interface ShareViewController ()
+@interface ShareViewController () <UIGestureRecognizerDelegate>
 @property (strong, nonatomic) IBOutlet UIButton *ShareLinkWithShareDialogButton;
 @property (strong, nonatomic) IBOutlet UIButton *ShareLinkWithAPICallsButton;
 @property (strong, nonatomic) IBOutlet UIButton *SharePhotoWithShareDialogButton;
 @property (strong, nonatomic) IBOutlet UIButton *StatusUpdateWithShareDialogButton;
 @property (strong, nonatomic) IBOutlet UIButton *StatusUpdateWithAPICallsButton;
-
+@property (strong, nonatomic) NSDictionary *backLinkInfo;
+@property (weak, nonatomic) UIView *backLinkView;
+@property (weak, nonatomic) UILabel *backLinkLabel;
 @end
 
 @implementation ShareViewController
 
+// Implement the check for displaying the back link
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    if (delegate.refererAppLink) {
+        self.backLinkInfo = delegate.refererAppLink;
+        [self _showBackLink];
+    }
+    delegate.refererAppLink = nil;
+    
+}
 
 //------------------Login implementation starts here------------------
 
@@ -99,24 +113,14 @@
 {
  
   // Check if the Facebook app is installed and we can present the share dialog
-  FBShareDialogParams *params = [[FBShareDialogParams alloc] init];
+  FBLinkShareParams *params = [[FBLinkShareParams alloc] init];
   params.link = [NSURL URLWithString:@"https://developers.facebook.com/docs/ios/share/"];
-  params.name = @"Sharing Tutorial";
-  params.caption = @"Build great social apps and get more installs.";
-  params.picture = [NSURL URLWithString:@"http://i.imgur.com/g3Qc1HN.png"];
-  params.description = @"Allow your users to share stories on Facebook from your app using the iOS SDK.";
-
 
   // If the Facebook app is installed and we can present the share dialog
   if ([FBDialogs canPresentShareDialogWithParams:params]) {
     
     // Present share dialog
     [FBDialogs presentShareDialogWithLink:params.link
-                                     name:params.name
-                                  caption:params.caption
-                              description:params.description
-                                  picture:params.picture
-                              clientState:nil
                                   handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
                                     if(error) {
                                       // An error occurred, we need to handle the error
@@ -180,7 +184,7 @@
   
   // Check if the Facebook app is installed and we can present the share dialog
   
-  FBShareDialogParams *params = [[FBShareDialogParams alloc] init];
+  FBLinkShareParams *params = [[FBLinkShareParams alloc] init];
   params.link = [NSURL URLWithString:@"https://developers.facebook.com/docs/ios/share/"];
   
   // If the Facebook app is installed and we can present the share dialog
@@ -287,7 +291,7 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
   UIImage *img = [info objectForKey:UIImagePickerControllerOriginalImage];
   
-  FBShareDialogPhotoParams *params = [[FBShareDialogPhotoParams alloc] init];
+  FBPhotoParams *params = [[FBPhotoParams alloc] init];
   params.photos = @[img];
   
   [FBDialogs presentShareDialogWithPhotoParams:params
@@ -456,6 +460,48 @@
 }
 
 
+//------------------------------------
+
+//------------------Handling links back to app link launching app------------------
+
+- (void) _showBackLink {
+    if (nil == self.backLinkView) {
+        // Set up the view
+        UIView *backLinkView = [[UIView alloc] initWithFrame:
+                                CGRectMake(0, 30, 320, 40)];
+        backLinkView.backgroundColor = [UIColor darkGrayColor];
+        UILabel *backLinkLabel = [[UILabel alloc] initWithFrame:
+                                  CGRectMake(2, 2, 316, 36)];
+        backLinkLabel.textColor = [UIColor whiteColor];
+        backLinkLabel.textAlignment = NSTextAlignmentCenter;
+        backLinkLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14.0f];
+        [backLinkView addSubview:backLinkLabel];
+        self.backLinkLabel = backLinkLabel;
+        [self.view addSubview:backLinkView];
+        self.backLinkView = backLinkView;
+    }
+    // Show the view
+    self.backLinkView.hidden = NO;
+    // Set up the back link label display
+    self.backLinkLabel.text = [NSString
+                               stringWithFormat:@"Touch to return to %@", self.backLinkInfo[@"app_name"]];
+    // Set up so the view can be clicked
+    UITapGestureRecognizer *tapGestureRecognizer =
+    [[UITapGestureRecognizer alloc] initWithTarget:self
+                                            action:@selector(_returnToLaunchingApp:)];
+    tapGestureRecognizer.numberOfTapsRequired = 1;
+    [self.backLinkView addGestureRecognizer:tapGestureRecognizer];
+    tapGestureRecognizer.delegate = self;
+}
+
+- (void)_returnToLaunchingApp:(id)sender {
+    // Open the app corresponding to the back link
+    NSURL *backLinkURL = [NSURL URLWithString:self.backLinkInfo[@"url"]];
+    if ([[UIApplication sharedApplication] canOpenURL:backLinkURL]) {
+        [[UIApplication sharedApplication] openURL:backLinkURL];
+    }
+    self.backLinkView.hidden = YES;
+}
 //------------------------------------
 
 @end

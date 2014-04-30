@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4471.1" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3697.3"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OGShareViewController">
             <connections>
-                <outlet property="ShareOGStoryWithAPICallsButton" destination="S0A-lu-mzq" id="2Yf-W7-WCU"/>
                 <outlet property="fbLoginView" destination="Aib-DE-2mX" id="dhV-SL-Zgs"/>
-                <outlet property="shareOGStoryButton" destination="S0A-lu-mzq" id="jZ3-Si-Kj5"/>
-                <outlet property="shareOGStoryWithAPICallsButton" destination="S0A-lu-mzq" id="aJS-A9-wF1"/>
+                <outlet property="shareOGStoryWithAPICallsButton" destination="S0A-lu-mzq" id="6vF-rV-Dyk"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
         </placeholder>
@@ -32,11 +30,8 @@
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
-                    <state key="highlighted">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
                     <connections>
-                        <action selector="shareOGStoryWithAPICalls:" destination="-1" eventType="touchUpInside" id="ySc-Dr-Zhx"/>
+                        <action selector="shareOGStory:" destination="-1" eventType="touchUpInside" id="cXz-2B-k8H"/>
                     </connections>
                 </button>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Login to Share an OG story with API calls:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Lq-Kr-Gim">

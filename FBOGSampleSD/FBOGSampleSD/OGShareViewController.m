@@ -77,7 +77,7 @@
   [self dismissViewControllerAnimated:YES completion:nil];
   
   // Check if the Facebook app is installed and we can present the share dialog
-  FBOpenGraphActionShareDialogParams *params = [[FBOpenGraphActionShareDialogParams alloc] init];
+  FBOpenGraphActionParams *params = [[FBOpenGraphActionParams alloc] init];
   params.action = action;
   params.actionType = @"fbogsamplesd:eat";
 
@@ -91,7 +91,7 @@
                                                if(error) {
                                                  // An error occurred, we need to handle the error
                                                  // See: https://developers.facebook.com/docs/ios/errors
-                                                 NSLog([NSString stringWithFormat:@"Error publishing story: %@", error.description]);
+                                                 NSLog(@"Error publishing story: %@", error.description);
                                                } else {
                                                  // Success
                                                  NSLog(@"result %@", results);
@@ -118,7 +118,7 @@
                                                 if (error) {
                                                   // An error occurred, we need to handle the error
                                                   // See: https://developers.facebook.com/docs/ios/errors
-                                                  NSLog([NSString stringWithFormat:@"Error publishing story: %@", error.description]);
+                                                  NSLog(@"Error publishing story: %@", error.description);
                                                 } else {
                                                   if (result == FBWebDialogResultDialogNotCompleted) {
                                                     // User cancelled.

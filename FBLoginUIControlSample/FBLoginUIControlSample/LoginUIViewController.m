@@ -7,7 +7,7 @@
 //
 
 /* This sample implements Login with Facebook using the standard Login button. 
- It asks for the basic_info, email and user_likes permissions.
+ It asks for the public_profile, email and user_likes permissions.
  You can see the tutorial that accompanies this sample here:
  https://developers.facebook.com/docs/ios/login-tutorial/#login-button
  
@@ -32,9 +32,9 @@
     if (self) {
       // Custom initialization
       
-      // Create a FBLoginView to log the user in with basic, email and likes permissions
-      // You should ALWAYS ask for basic permissions (basic_info) when logging the user in
-      FBLoginView *loginView = [[FBLoginView alloc] initWithReadPermissions:@[@"basic_info", @"email", @"user_likes"]];
+      // Create a FBLoginView to log the user in with basic, email and friend list permissions
+      // You should ALWAYS ask for basic permissions (public_profile) when logging the user in
+      FBLoginView *loginView = [[FBLoginView alloc] initWithReadPermissions:@[@"public_profile", @"email", @"user_friends"]];
       
       // Set this loginUIViewController to be the loginView button's delegate
       loginView.delegate = self;

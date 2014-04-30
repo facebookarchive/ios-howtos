@@ -11,10 +11,6 @@
 #import "CustomLoginViewController.h"
 #import "AppDelegate.h"
 
-@interface CustomLoginViewController ()
-- (IBAction)buttonClicked:(id)sender;
-@end
-
 @implementation CustomLoginViewController
 
 - (IBAction)buttonTouched:(id)sender
@@ -30,8 +26,8 @@
   // If the session state is not any of the two "open" states when the button is clicked
   } else {
     // Open a session showing the user the login UI
-    // You must ALWAYS ask for basic_info permissions when opening a session
-    [FBSession openActiveSessionWithReadPermissions:@[@"basic_info"]
+    // You must ALWAYS ask for public_profile permissions when opening a session
+    [FBSession openActiveSessionWithReadPermissions:@[@"public_profile"]
                                        allowLoginUI:YES
                                   completionHandler:
      ^(FBSession *session, FBSessionState state, NSError *error) {
