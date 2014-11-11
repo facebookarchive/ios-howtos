@@ -16,6 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "FBSDKMacros.h"
+
 /*!
  @typedef NS_ENUM (NSUInteger, FBLikeControlAuxiliaryPosition)
 
@@ -30,6 +32,11 @@ typedef NS_ENUM(NSUInteger, FBLikeControlAuxiliaryPosition)
     /*! The auxiliary view is below the like button. */
     FBLikeControlAuxiliaryPositionBottom,
 };
+
+/*!
+ @abstract Converts an FBLikeControlAuxiliaryPosition to an NSString.
+ */
+FBSDK_EXTERN NSString *NSStringFromFBLikeControlAuxiliaryPosition(FBLikeControlAuxiliaryPosition auxiliaryPosition);
 
 /*!
  @typedef NS_ENUM(NSUInteger, FBLikeControlHorizontalAlignment)
@@ -48,6 +55,31 @@ typedef NS_ENUM(NSUInteger, FBLikeControlHorizontalAlignment)
 };
 
 /*!
+ @abstract Converts an FBLikeControlHorizontalAlignment to an NSString.
+ */
+FBSDK_EXTERN NSString *NSStringFromFBLikeControlHorizontalAlignment(FBLikeControlHorizontalAlignment horizontalAlignment);
+
+/*!
+ @typedef NS_ENUM (NSUInteger, FBLikeControlObjectType)
+
+ @abstract Specifies the type of object referenced by the objectID of a like control.
+ */
+typedef NS_ENUM(NSUInteger, FBLikeControlObjectType)
+{
+    /*! The objectID refers to an unknown object type. */
+    FBLikeControlObjectTypeUnknown = 0,
+    /*! The objectID refers to an Open Graph object. */
+    FBLikeControlObjectTypeOpenGraphObject,
+    /*! The objectID refers to a Page object. */
+    FBLikeControlObjectTypePage,
+};
+
+/*!
+ @abstract Converts an FBLikeControlObjectType to an NSString.
+ */
+FBSDK_EXTERN NSString *NSStringFromFBLikeControlObjectType(FBLikeControlObjectType objectType);
+
+/*!
  @typedef NS_ENUM (NSUInteger, FBLikeControlStyle)
 
  @abstract Specifies the style of a like control.
@@ -61,6 +93,11 @@ typedef NS_ENUM(NSUInteger, FBLikeControlStyle)
     /*! Displays the button only. */
     FBLikeControlStyleButton,
 };
+
+/*!
+ @abstract Converts an FBLikeControlStyle to an NSString.
+ */
+FBSDK_EXTERN NSString *NSStringFromFBLikeControlStyle(FBLikeControlStyle style);
 
 /*!
  @class FBLikeControl
@@ -106,6 +143,15 @@ typedef NS_ENUM(NSUInteger, FBLikeControlStyle)
  Open Graph object.  The objects may be public objects, like pages, or objects that are defined by your application.
  */
 @property (nonatomic, copy) NSString *objectID;
+
+/*!
+ @abstract The type of object referenced by the objectID.
+
+ @discussion If the objectType is unknown, the control will determine the objectType by querying the server with the
+ objectID.  Specifying a value for the objectType is an optimization that should be used if the type is known by the
+ consumer.  Consider setting the objectType if you know your objectType when setting the objectID.
+ */
+@property (nonatomic, assign) FBLikeControlObjectType objectType;
 
 /*!
  @abstract The preferred maximum width (in points) for autolayout.

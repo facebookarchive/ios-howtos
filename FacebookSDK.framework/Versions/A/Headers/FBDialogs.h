@@ -31,14 +31,14 @@
  @abstract
  Passed to a handler to indicate the result of a dialog being displayed to the user.
  */
-typedef enum {
+typedef NS_ENUM(NSUInteger, FBOSIntegratedShareDialogResult) {
     /*! Indicates that the dialog action completed successfully. */
     FBOSIntegratedShareDialogResultSucceeded = 0,
     /*! Indicates that the dialog action was cancelled (either by the user or the system). */
     FBOSIntegratedShareDialogResultCancelled = 1,
     /*! Indicates that the dialog could not be shown (because not on ios6 or ios6 auth was not used). */
     FBOSIntegratedShareDialogResultError = 2
-} FBOSIntegratedShareDialogResult;
+};
 
 /*!
  @typedef
@@ -188,6 +188,15 @@ typedef void (^FBDialogAppCallCompletionHandler)(
                                           handler:(FBOSIntegratedShareDialogHandler)handler;
 
 /*!
+ @abstract Determines if the device is capable of presenting the OS integrated share dialog.
+
+ @discussion This is the most basic check for capability for this feature.
+
+ @see canPresentOSIntegratedShareDialogWithSession:
+ */
++ (BOOL)canPresentOSIntegratedShareDialog;
+
+/*!
  @abstract
  Determines whether a call to presentShareDialogModallyFrom: will successfully present
  a dialog. This is useful for applications that need to modify the available UI controls
@@ -203,6 +212,17 @@ typedef void (^FBDialogAppCallCompletionHandler)(
 + (BOOL)canPresentOSIntegratedShareDialogWithSession:(FBSession *)session;
 
 #pragma mark - Native Share Dialog
+
+/*!
+ @abstract Determines if the device is capable of presenting the share dialog.
+
+ @discussion This is the most basic check for capability for this feature.
+
+ @see canPresentShareDialogWithOpenGraphActionParams:
+ @see canPresentShareDialogWithParams:
+ @see canPresentShareDialogWithPhotos
+ */
++ (BOOL)canPresentShareDialog;
 
 /*!
  @abstract
@@ -607,6 +627,17 @@ typedef void (^FBDialogAppCallCompletionHandler)(
 #pragma mark - Message Dialog
 
 /*!
+ @abstract Determines if the device is capable of presenting the message dialog.
+
+ @discussion This is the most basic check for capability for this feature.
+
+ @see canPresentMessageDialogWithOpenGraphActionParams:
+ @see canPresentMessageDialogWithParams:
+ @see canPresentMessageDialogWithPhotos
+ */
++ (BOOL)canPresentMessageDialog;
+
+/*!
  @abstract
  Determines whether a call to `presentMessageDialogWithOpenGraphActionParams:...` will
  successfully present a dialog in the Facebook Messenger app. This is useful for applications
@@ -772,7 +803,8 @@ typedef void (^FBDialogAppCallCompletionHandler)(
  may be suspended or killed, the app must also give a fallbackHandler to the
  handleOpenURL: method in FBAppCall.
 
- @param params The parameters for the Message Dialog
+ @param params The parameters for the Message Dialog. The "friends" and "place" properties
+ will be ignored as the Facebook Messenger app does not support tagging.
 
  @param clientState An NSDictionary that's passed through when the completion handler
  is called. This is useful for the app to maintain state about the share request that
@@ -867,7 +899,8 @@ typedef void (^FBDialogAppCallCompletionHandler)(
  may be suspended or killed, the app must also give a fallbackHandler to the
  handleOpenURL: method in FBAppCall.
 
- @param params The parameters for the Message Dialog.
+ @param params The parameters for the Message Dialog. The "friends" and "place" properties
+ will be ignored as the Facebook Messenger app does not support tagging.
 
  @param clientState An NSDictionary that's passed through when the completion handler
  is called. This is useful for the app to maintain state about the share request that
