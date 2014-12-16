@@ -33,10 +33,19 @@
 @protocol FBOpenGraphObject<FBGraphObject>
 
 /*!
- @property
- @abstract Typed access to the object's id
+ @abstract use objectID instead
+ @deprecated use objectID instead
  */
-@property (retain, nonatomic) NSString              *id;
+@property (retain, nonatomic) NSString *id __attribute__ ((deprecated("use objectID instead")));
+
+/*!
+ @property
+ @abstract Typed access to the object's ID.
+ @discussion Note this typically refers to the "id" field of the graph object (i.e., equivalent
+ to `[self objectForKey:@"id"]`) but is differently named to avoid conflicting with Apple's
+ non-public selectors.
+ */
+@property (retain, nonatomic) NSString *objectID;
 
 /*!
  @property
@@ -63,10 +72,11 @@
 @property (retain, nonatomic) id                    url;
 
 /*!
- @property
- @abstract Typed access to the object's description property
- */
-@property (retain, nonatomic) id                    description;
+ @abstract Typed access to the object's description property.
+ @discussion Note this typically refers to the "description" field of the graph object (i.e., equivalent
+ to `[self objectForKey:@"description"]`) but is differently named to avoid conflicting with Apple's
+ non-public selectors.*/
+@property (retain, nonatomic) id                    objectDescription;
 
 /*!
  @property

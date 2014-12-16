@@ -319,17 +319,25 @@
   [FBRequestConnection startWithGraphPath:@"/me/permissions"
                         completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
                           if (!error){
-                            NSDictionary *currentPermissions= [(NSArray *)[result data] objectAtIndex:0];
-                            NSMutableArray *requestPermissions = [[NSMutableArray alloc] initWithArray:@[]];
-                            
-                            // Check if all the permissions we need are present in the user's current permissions
-                            // If they are not present add them to the permissions to be requested
-                            for (NSString *permission in permissionsNeeded){
-                              if (![currentPermissions objectForKey:permission]){
-                                [requestPermissions addObject:permission];
-                              }
+                            // Parse the list of existing permissions and extract them for easier use
+                            NSMutableArray *currentPermissions = [[NSMutableArray alloc] init];
+                            NSArray *returnedPermissions = (NSArray *)[result data];
+                            for (NSDictionary *perm in returnedPermissions) {
+                                if ([[perm objectForKey:@"status"] isEqualToString:@"granted"]) {
+                                    [currentPermissions addObject:[perm objectForKey:@"permission"]];
+                                }
                             }
-                            
+
+                            // Build the list of requested permissions by starting with the permissions
+                            // needed and then removing any current permissions
+                            NSLog(@"Needed: %@", permissionsNeeded);
+                            NSLog(@"Current: %@", currentPermissions);
+
+                            NSMutableArray *requestPermissions = [[NSMutableArray alloc] initWithArray:permissionsNeeded copyItems:YES];
+                            [requestPermissions removeObjectsInArray:currentPermissions];
+
+                            NSLog(@"Asking: %@", requestPermissions);
+
                             // If we have permissions to request
                             if ([requestPermissions count] > 0){
                               // Ask for the missing permissions
@@ -349,7 +357,6 @@
                               // Permissions are present, we can request the user information
                               [self makeRequestToShareLink];
                             }
-                            
                           } else {
                             // There was an error requesting the permission information
                             // See our Handling Errors guide: https://developers.facebook.com/docs/ios/errors/
@@ -401,17 +408,25 @@
   [FBRequestConnection startWithGraphPath:@"/me/permissions"
                         completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
                           if (!error){
-                            NSDictionary *currentPermissions= [(NSArray *)[result data] objectAtIndex:0];
-                            NSMutableArray *requestPermissions = [[NSMutableArray alloc] initWithArray:@[]];
-                            
-                            // Check if all the permissions we need are present in the user's current permissions
-                            // If they are not present add them to the permissions to be requested
-                            for (NSString *permission in permissionsNeeded){
-                              if (![currentPermissions objectForKey:permission]){
-                                [requestPermissions addObject:permission];
+                            // Parse the list of existing permissions and extract them for easier use
+                            NSMutableArray *currentPermissions = [[NSMutableArray alloc] init];
+                            NSArray *returnedPermissions = (NSArray *)[result data];
+                            for (NSDictionary *perm in returnedPermissions) {
+                              if ([[perm objectForKey:@"status"] isEqualToString:@"granted"]) {
+                                [currentPermissions addObject:[perm objectForKey:@"permission"]];
                               }
                             }
-                            
+
+                            // Build the list of requested permissions by starting with the permissions
+                            // needed and then removing any current permissions
+                            NSLog(@"Needed: %@", permissionsNeeded);
+                            NSLog(@"Current: %@", currentPermissions);
+
+                            NSMutableArray *requestPermissions = [[NSMutableArray alloc] initWithArray:permissionsNeeded copyItems:YES];
+                            [requestPermissions removeObjectsInArray:currentPermissions];
+
+                            NSLog(@"Asking: %@", requestPermissions);
+
                             // If we have permissions to request
                             if ([requestPermissions count] > 0){
                               // Ask for the missing permissions

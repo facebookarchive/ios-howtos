@@ -99,9 +99,20 @@
   [FBRequestConnection startWithGraphPath:@"/me/permissions"
                         completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
                           if (!error){
-                            NSDictionary *permissions= [(NSArray *)[result data] objectAtIndex:0];
-                            if (![permissions objectForKey:@"publish_actions"]){
+                            // Walk the list of permissions looking to see if publish_actions has been granted
+                            NSArray *permissions = (NSArray *)[result data];
+                            BOOL publishActionsSet = FALSE;
+                            for (NSDictionary *perm in permissions) {
+                              if ([[perm objectForKey:@"permission"] isEqualToString:@"publish_actions"] &&
+                                  [[perm objectForKey:@"status"] isEqualToString:@"granted"]) {
+                                publishActionsSet = TRUE;
+                                NSLog(@"publish_actions granted.");
+                                break;
+                              }
+                            }
+                            if (!publishActionsSet){
                               // Permission hasn't been granted, so ask for publish_actions
+                              NSLog(@"publish_actions not granted.");
                               [FBSession.activeSession requestNewPublishPermissions:[NSArray arrayWithObject:@"publish_actions"]
                                                                     defaultAudience:FBSessionDefaultAudienceFriends
                                                                   completionHandler:^(FBSession *session, NSError *error) {
